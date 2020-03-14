@@ -3,40 +3,74 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - ImpecableJB</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        /* Simple CSS3 Fade-in Animation */
+        .underlineHover:after {
+            display: block;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 2px;
+            background-color: #5fbae9;
+            content: "";
+            transition: width 0.2s;
+        }
+
+        .underlineHover:hover {
+            color: #0d0d0d;
+        }
+
+            .underlineHover:hover:after {
+                width: 100%;
+            }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+    <div class="navbar navbar-expand-sm navbar-light fixed-top shadow p-3 mb-5" style="background-color:#cce6ff">
+        <div class="navbar-collapse collapse justify-content-lg-start">
+            <ul class="nav navbar-nav">
+                <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("MuestraProductos","Productos")" style="font-size:large;color:#666666"><i class="fa fa-home fa-lg"></i> Inicio</a></li>
+                <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("About","Home")" style="font-size:large;color:#666666"><i class="fa fa-address-book fa-lg"></i> Acerca de</a></li>
+            </ul>
+        </div>
+        <div class="nav navbar-brand justify-content-lg-center">
+            <img src="~/Content/LogoMiniatura.png" style="width:80px" />
+        </div>
+        <div class="navbar-collapse collapse justify-content-lg-end">
+            <ul class="nav navbar-nav">
+                @if (Session["Usuario"] == null)
+                {
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("InicioClientes","Login")" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i> Iniciar sesión</a></li>
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("Index","Login")" style="font-size:large;color:#666666"><i class="fa fa-shopping-cart fa-lg"></i> Carrito</a></li>
+                }
+                else
+                {
+
+                    <li class="nav-item underlineHover">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link active" })</li>
+                    <li class="nav-item underlineHover">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link active" })</li>
+                    <li class="nav-item underlineHover">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link active" })</li>
+                }
+
+            </ul>
         </div>
     </div>
+    <br /><br /><br />
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Impecable <br /> Isaac Rodríguez Matturen</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/LoginSetUp.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
