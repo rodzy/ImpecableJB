@@ -1,4 +1,4 @@
-﻿@*Recordar el modelo*@
+﻿@model IEnumerable<ImpecableJB.Models.Producto>
 @{
     ViewBag.Title = "Productos";
 }
@@ -48,26 +48,26 @@
                     </a>
                 </div>
 
+                
                 <div class="row">
-                    @*@foreach (var item in collection)
-                    {*@
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" ></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="#">Item One</a>
-                                </h4>
-                                <h5>$24.99</h5>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                            </div>
-                            <div class="card-footer">
-                                @*If de si es producto o servicio*@
-                                <button class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" >Comprar</button>                               
+                    @foreach (var item in @Model)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <img class="card-img-top" src="@Url.Content(item.imagen)" >
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </h3>
+                                    <p class="card-text">@Html.DisplayFor(modelItem => item.descripcion)</p>
+                                </div>
+                                <div class="card-footer">
+                                    <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>                                 
+                                    <button class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" onclick="location.href=@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">Agregar al carrito</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    @*}*@
+                    }
                 </div>
                 <!-- /.row -->
 

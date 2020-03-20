@@ -47,10 +47,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -122,12 +130,23 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarritoItem.cs" />
+    <Compile Include="Models\Cupones.cs" />
+    <Compile Include="Models\Detalle_Pedido.cs" />
+    <Compile Include="Models\ImpecableContext.cs" />
+    <Compile Include="Models\Nivel.cs" />
+    <Compile Include="Models\Pedido.cs" />
+    <Compile Include="Models\Producto.cs" />
+    <Compile Include="Models\Rol.cs" />
+    <Compile Include="Models\Tipo_Producto.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +164,28 @@
     <Content Include="Content\logo-ImpecableJB.png" />
     <Content Include="Content\LogoImpecable2.png" />
     <Content Include="Content\LogoMiniatura.png" />
+    <Content Include="Content\Productos\AGROwash.png" />
+    <Content Include="Content\Productos\aLCALINOcip.png" />
+    <Content Include="Content\Productos\Alcoholgel.png" />
+    <Content Include="Content\Productos\AntigrasaUltraClean.png" />
+    <Content Include="Content\Productos\Aqua.png" />
+    <Content Include="Content\Productos\cloro12porciento.png" />
+    <Content Include="Content\Productos\desengrasanteQuita.png" />
+    <Content Include="Content\Productos\desinfectanteBEBE.png" />
+    <Content Include="Content\Productos\DesinfectanteLavanda.png" />
+    <Content Include="Content\Productos\dEtergenteCIP.png" />
+    <Content Include="Content\Productos\detergenteSoft.png" />
+    <Content Include="Content\Productos\DGXS.png" />
+    <Content Include="Content\Productos\EcoSanitizandoIND.png" />
+    <Content Include="Content\Productos\jabonManosSINaROMA.png" />
+    <Content Include="Content\Productos\LavaplatosNaturalBright.png" />
+    <Content Include="Content\Productos\LimpiadordeBanos.png" />
+    <Content Include="Content\Productos\Limpiadordeceramica.png" />
+    <Content Include="Content\Productos\manosJabon.png" />
+    <Content Include="Content\Productos\OXAminClox.png" />
+    <Content Include="Content\Productos\SiliconabrillantadorFlorex.png" />
+    <Content Include="Content\Productos\suavizanteRopa.png" />
+    <Content Include="Content\Productos\WHITEX.png" />
     <Content Include="Content\the-honest-company-Ua9AK-pZ5cw-unsplash.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -291,7 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Carrito\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
