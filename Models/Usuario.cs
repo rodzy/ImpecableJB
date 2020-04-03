@@ -22,31 +22,42 @@ namespace ImpecableJB.Models
 
         public int idRol { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="El nombre es requerido")]
+        [Display(Name ="Nombre")]
         [StringLength(50)]
         public string nombre { get; set; }
 
-        [Required]
+        [Display(Name ="Primer Apellido")]
+        [Required(ErrorMessage ="El primer apellido es requerido")]
         [StringLength(50)]
         public string apellido1 { get; set; }
 
+        [Display(Name ="Segundo Apellido")]
         [StringLength(50)]
         public string apellido2 { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El correo electrónico es requerido")]
+        [Display(Name ="Correo electrónico")]
+        [RegularExpression(@"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$",ErrorMessage ="El correo electrónico no es válido")]
         public string correoElectronico { get; set; }
 
-        [Required]
+        [Display(Name ="Contraseña")]
+        [Required(ErrorMessage = "La contraseña es requerida")]
+        [DataType(DataType.Password)]
         [MaxLength(50)]
-        public byte[] contrasena { get; set; }
+        //[RegularExpression(@"^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$", ErrorMessage = "Al menos una letra mayúscula,una letra minúscula,un número o caracter especial,mínimo 8 caracteres.")]
+        public string contrasena { get; set; }
 
+        [Display(Name ="Estado")]
         public bool? estado { get; set; }
 
+        [Display(Name="Rango")]
         public virtual Nivel Nivel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pedido> Pedido { get; set; }
 
+        [Display(Name ="Tipo de usuario")]
         public virtual Rol Rol { get; set; }
     }
 }

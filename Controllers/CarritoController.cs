@@ -17,7 +17,7 @@ namespace ImpecableJB.Controllers
         /// Cuando el método GetIndex(id) devuelve un -1 quiere decir que no encontró el item 
         /// dentro del carrito, de lo contrario aumenta la cantidad del producto
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Identificador del producto escogido</param>
         /// <returns></returns>
         public ActionResult AgregarCarrito(int id)
         {
@@ -42,6 +42,15 @@ namespace ImpecableJB.Controllers
                     Session["Carrito"] = CarritoRecurrente;
                 }
             }
+            TempData["Mensaje"] = "Añadido al carrito";
+            return Content(TempData["Message"].ToString());
+        }
+        /// <summary>
+        /// Redirecciona a la página de la visualización del carrito
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CarritoPrevia()
+        {
             return View();
         }
         /// <summary>
@@ -71,7 +80,7 @@ namespace ImpecableJB.Controllers
         {
             List<CarritoItem> carritoItems = (List<CarritoItem>)Session["Carrito"];
             carritoItems.RemoveAt(GetIndex(id));
-            return View("Recordar la vista del carrito");
+            return View("CarritoPrevia");
         }
 
         /// <summary>
@@ -95,7 +104,7 @@ namespace ImpecableJB.Controllers
                     EliminarElemento(id);
                 }
             }       
-            return View("Recordar la vista del carrito");
+            return View("CarritoPrevia");
         }
     }
 }

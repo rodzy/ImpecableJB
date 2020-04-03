@@ -1,0 +1,43 @@
+﻿@model ImpecableJB.Models.CarritoItem
+@{
+    ViewBag.Title = "CarritoPrevia";
+}
+
+<h3>ImpecableJB - Carrito de compras</h3>
+<br />
+<small>Hola</small>
+@if (Session["Carrito"] != null)
+{
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col"></th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        @foreach (var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
+        {
+            <tbody>
+                <tr>
+                    <th scope="row"><img scr="@Url.Content(item.Producto.imagen)"></th>
+                    @*Rellenar con los elementos del modelo*@                   
+                    <td></td>
+                </tr>
+            </tbody>
+        }
+        <tfoot></tfoot>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        Su carrito de compras está vacío si desea agregar articulos haga @Html.ActionLink("click aquí", "MuestraProductos", "Productos",null, new {@class="alert-link"})
+    </div>
+}
+
+
+

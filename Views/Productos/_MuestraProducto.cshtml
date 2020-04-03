@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ImpecableJB.Models.Producto>
+
+@{
+    int id = 29;
+}
+@foreach (var item in @Model)
+{
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100" style="background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);">
+            <img class="card-img-top" src="@Url.Content(item.imagen)">
+            <div class="card-body">
+                <h5 class="card-title">
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </h5>
+                <p class="card-text">
+                    <a id="leer" class="btn btn-primary" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">...leer más</a>
+                    <div class="collapse multi-collapse" id="leermas_@id">
+                        @Html.DisplayFor(model => item.descripcion)
+                    </div>
+                </p>
+            </div>
+            <div class="card-footer">
+                <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>
+                <a class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">Agregar al carrito</a>
+
+                @*<div class="alert alert-info" id="alertacarrito">
+                        <center>Agregado al carrito<br />@Html.ActionLink("Ver carrito", "CarritoCompras", "Carrito", new { @class = "alert-link" })</center>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+    id++;
+}

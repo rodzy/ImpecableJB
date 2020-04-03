@@ -16,7 +16,18 @@ namespace ImpecableJB.Controllers
         // GET: Productos
         public ActionResult MuestraProductos()
         {
+            if (TempData.ContainsKey("Validacion") && TempData.ContainsKey("Rango") && TempData.ContainsKey("Usuario"))
+            {
+                ViewBag.mensaje = TempData["Validacion"].ToString();
+                ViewBag.rango = TempData["Rango"].ToString();
+                ViewBag.Usuario = TempData["Usuario"].ToString();
+            }
             return View(db.Producto.ToList());
+        }
+
+        public ActionResult FiltrarProductos(int idTipo)
+        {
+            return PartialView("_MuestraProducto", db.Producto.Where(x => x.idTipoProducto == idTipo).ToList());
         }
         
     }

@@ -1,0 +1,64 @@
+﻿@model ImpecableJB.Models.Usuario
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ImpecableJB - Inicio de sesión</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Login.css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body style="background: url(../../Content/the-honest-company-Ua9AK-pZ5cw-unsplash.jpg) no-repeat fixed center; background-size:cover; ">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <img src="~/Content/logo-ImpecableJB.png" id="icon" alt="User Icon" />
+                @if (ViewBag.mensaje != "" && ViewBag.mensaje != null)
+                {
+                    <div class="alert alert-info" role="alert" id="alertaMensajes">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <center><strong>@ViewBag.mensaje</strong></center>
+                    </div>
+                }
+            </div>
+            @*Form de ingreso de datos personales*@
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.EditorFor(model => model.correoElectronico, new { htmlAttributes = new { @class = "fadeIn second", @type = "text", @id = "login", @name = "login", @placeholder = "Correo electrónico" } })
+                </div>
+                <small>
+                    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @style = "color: #99ccff" })
+                </small>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.contrasena, new { htmlAttributes = new { @class = "fadeIn third", @type = "password", @id = "password-field", @name = "password", @placeholder = "Contraseña" } })
+                    <span toggle="#password-field" class="fadeIn third fa fa-fw fa-eye field-icon toggle-password underlineHover" style="color:cornflowerblue"></span>
+                </div>
+                <small>
+                    @Html.ValidationMessageFor(model => model.contrasena, "", new { @style = "color: #99ccff" })
+                </small>
+                <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
+            }
+            @*Action links registro por primera vez*@
+            <div id="formFooter">
+                @Html.ActionLink("¿No tiene una cuenta? Regístrese aquí", "RegistroClientes", "Usuario", null, new { @class = "underlineHover" })
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/LoginSetUp.js")
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
