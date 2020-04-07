@@ -1,0 +1,82 @@
+﻿@model ImpecableJB.Models.Usuario
+
+@{
+    ViewBag.Title = "Detalles usuario";
+}
+
+<h2>DetallesUsuario</h2>
+
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nivel.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nivel.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rol.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rol.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellido1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellido1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellido2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellido2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.correoElectronico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correoElectronico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contrasena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contrasena)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idUsuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

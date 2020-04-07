@@ -23,15 +23,22 @@
 
         [Required]
         [StringLength(50)]
+        [Display(Name ="Nombre producto")]
         public string nombre { get; set; }
 
         [Required]
+        [Display(Name ="Descripción")]
+        [DataType(DataType.MultilineText)]
         public string descripcion { get; set; }
 
+        [Display(Name ="Referencia")]
         public string imagen { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString = "₡{0:#}")]
+
+        [DisplayFormat(DataFormatString = "₡{0:#}")]
+        [Display(Name ="Precio unitario")]
         public decimal precio { get; set; }
 
+        [Display(Name = "En stock")]
         public bool? estado { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -40,6 +47,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Detalle_Pedido> Detalle_Pedido { get; set; }
 
+        [Display(Name ="Tipo de producto")]
         public virtual Tipo_Producto Tipo_Producto { get; set; }
     }
 }

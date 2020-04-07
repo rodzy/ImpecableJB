@@ -16,6 +16,10 @@ namespace ImpecableJB.Controllers
         // GET: Login
         public ActionResult InicioClientes()
         {
+            if (TempData.ContainsKey("Registrado"))
+            {
+                ViewBag.EstadoRegistro = TempData["Registrado"].ToString();
+            }
             return View();
         }
         /// <summary>
@@ -30,14 +34,15 @@ namespace ImpecableJB.Controllers
             if (user != null)
             {
                 Session["Usuario"] = user.idUsuario;
-                TempData["Rango"] = user.Nivel.nombre;
+                Session["Rango"] = user.Nivel;
+                Session["ImagenRango"] = "~/Content/Rangos/"+user.Nivel.nombre+".png";
                 if (user.Rol.descripcion.Equals("Administrador"))
                 {
-                    TempData["Usuario"] = user.correoElectronico + "(" + user.Rol.descripcion + ")";
+                    Session["Nombre"] = "Bienvenido,"+ user.nombre + "(" + user.Rol.descripcion + ")";
                 }
                 else
                 {
-                    TempData["Usuario"] = "Bienvenido," + user.nombre;
+                    Session["Nombre"] = "Bienvenido," + user.nombre;
                 }
                    
                 return RedirectToAction("MuestraProductos","Productos");
@@ -58,10 +63,71 @@ namespace ImpecableJB.Controllers
             Session.Abandon();
             return RedirectToAction("MuestraProductos","Productos");
         }
-        public ActionResult RegistroClientes()
+        /// <summary>
+        /// Método que devuelve la vista del registro de usuarios para el cliente
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RegistroCliente()
         {
             return View();
         }
+        /// <summary>
+        /// Método que se apoya de POST para añadir un nuevo cliente a la base de datos
+        /// Se incluyen todos los datos necesarios para el manejo del cliente
+        /// Por defecto se establece el rol en 2 que pertenece a Cliente (Los administradores solo en base de datos se registran)
+        /// Nivel= Por defecto en la estapa inicial que es -Sin Rango-
+        /// </summary>
+        /// <param name="usuario">Objeto que viene desde el modelo de la vista construido</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult RegistroCliente(Usuario usuario)
+        {
+            usuario.idNivel = 1;
+            usuario.idRol = 2;
+            if (usuario != null)
+            {
+                db.Usuario.Add(usuario);
+                db.SaveChanges();
+                TempData["Registrado"] = "Usuario correctamente registrado";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            else
+            {
+                TempData["Registrado"] = "Hay un problema al registrar el usuario";
+                return View(usuario);
+            }
+        }
+
+        /// <summary>
+        /// Método para encontrar los detalles del cliente
+        /// </summary>
+        /// <param name="id">Identificador del usuario seleccionado</param>
+        /// <returns></returns>
+        public ActionResult DetallesUsuario(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "Especifique el usuario para acceder a los detalles";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            Usuario usuario = db.Usuario.Find(id);
+            if (usuario == null)
+            {
+                TempData["Mensaje"] = "No existe el usuario especificado";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            return View("DetallesUsuario", usuario);
+        }
+
+        /// <summary>
+        /// Método que retorna una lista de usaurios para el control por el administrador
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListaUsuarios()
+        {
+            return View(db.Usuario.ToList());
+        }
+
 
     }
 }

@@ -13,19 +13,16 @@
                     @Html.DisplayFor(modelItem => item.nombre)
                 </h5>
                 <p class="card-text">
-                    <a id="leer" class="btn btn-primary" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">...leer más</a>
+                    <a id="leer" class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">Detalles del producto</a>
                     <div class="collapse multi-collapse" id="leermas_@id">
-                        @Html.DisplayFor(model => item.descripcion)
+                        @Html.DisplayFor(model => item.descripcion)<br />
+                        <small><b>@Html.LabelFor(model => item.Tipo_Producto): </b>@Html.DisplayFor(model => item.Tipo_Producto.nombre)</small>
                     </div>
                 </p>
             </div>
             <div class="card-footer">
                 <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>
                 <a class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">Agregar al carrito</a>
-
-                @*<div class="alert alert-info" id="alertacarrito">
-                        <center>Agregado al carrito<br />@Html.ActionLink("Ver carrito", "CarritoCompras", "Carrito", new { @class = "alert-link" })</center>
-                    </div>*@
 
             </div>
         </div>

@@ -3,6 +3,15 @@
     padding-bottom: 20px;
 }
 
+body::-webkit-scrollbar{
+    width:0.30rem;
+}
+    body::-webkit-scrollbar-track {
+        background: #e6f2ff;
+    }
+    body::-webkit-scrollbar-thumb {
+        background: #99caff;
+    }
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

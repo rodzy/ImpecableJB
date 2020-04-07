@@ -14,17 +14,20 @@ namespace ImpecableJB.Controllers
     {
         private ImpecableContext db = new ImpecableContext();
         // GET: Productos
+        /// <summary>
+        /// Método que devuelve la vista de los productos
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MuestraProductos()
         {
-            if (TempData.ContainsKey("Validacion") && TempData.ContainsKey("Rango") && TempData.ContainsKey("Usuario"))
-            {
-                ViewBag.mensaje = TempData["Validacion"].ToString();
-                ViewBag.rango = TempData["Rango"].ToString();
-                ViewBag.Usuario = TempData["Usuario"].ToString();
-            }
             return View(db.Producto.ToList());
         }
 
+        /// <summary>
+        /// Método que se apoya de PartialView para filtrar lista de los productos por la categoría seleccionada
+        /// </summary>
+        /// <param name="idTipo">Identificador de los tipos de producto</param>
+        /// <returns></returns>
         public ActionResult FiltrarProductos(int idTipo)
         {
             return PartialView("_MuestraProducto", db.Producto.Where(x => x.idTipoProducto == idTipo).ToList());

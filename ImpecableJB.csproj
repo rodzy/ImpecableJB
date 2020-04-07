@@ -131,7 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CuponesController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,8 +156,10 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Carrito.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\footer.css" />
     <Content Include="Content\header-ImpecableJB.png" />
     <Content Include="Content\LayoutMaster.css" />
     <Content Include="Content\Login.css" />
@@ -186,6 +188,11 @@
     <Content Include="Content\Productos\SiliconabrillantadorFlorex.png" />
     <Content Include="Content\Productos\suavizanteRopa.png" />
     <Content Include="Content\Productos\WHITEX.png" />
+    <Content Include="Content\Rangos\Bronce.png" />
+    <Content Include="Content\Rangos\Diamante.png" />
+    <Content Include="Content\Rangos\Oro.png" />
+    <Content Include="Content\Rangos\Plata.png" />
+    <Content Include="Content\Rangos\Sin Rango.png" />
     <Content Include="Content\the-honest-company-Ua9AK-pZ5cw-unsplash.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -315,9 +322,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -329,10 +333,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Usuario\InicioClientes.cshtml" />
-    <Content Include="Views\Usuario\RegistroClientes.cshtml" />
     <Content Include="Views\Productos\MuestraProductos.cshtml" />
     <Content Include="Views\Carrito\CarritoPrevia.cshtml" />
     <Content Include="Views\Productos\_MuestraProducto.cshtml" />
+    <Content Include="Views\Usuario\RegistroCliente.cshtml" />
+    <Content Include="Views\Usuario\DetallesUsuario.cshtml" />
+    <Content Include="Views\Cupones\RegistrarCupones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

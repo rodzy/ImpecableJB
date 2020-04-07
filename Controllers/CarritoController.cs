@@ -21,6 +21,7 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult AgregarCarrito(int id)
         {
+            //Agrega por primeera vez un producto al carrito
             if (Session["Carrito"] == null)
             {
                 List<CarritoItem> CarritoNuevo = new List<CarritoItem>();
@@ -43,7 +44,7 @@ namespace ImpecableJB.Controllers
                 }
             }
             TempData["Mensaje"] = "Añadido al carrito";
-            return Content(TempData["Message"].ToString());
+            return View("CarritoPrevia");
         }
         /// <summary>
         /// Redirecciona a la página de la visualización del carrito

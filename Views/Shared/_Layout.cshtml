@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - ImpecableJB</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/footer.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <style>
@@ -19,11 +20,24 @@
             content: "";
             transition: width 0.2s;
         }
+
         .underlineHover:hover {
             color: #0d0d0d;
         }
-        .underlineHover:hover:after {
-            width: 100%;
+
+            .underlineHover:hover:after {
+                width: 100%;
+            }
+        body::-webkit-scrollbar {
+            width: 0.50rem;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #b3d7ff;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: #3392ff;
         }
     </style>
 </head>
@@ -33,15 +47,14 @@
             <ul class="nav navbar-nav">
                 @if (Session["Usuario"] == null)
                 {
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("MuestraProductos","Productos")" style="font-size:large;color:#666666"><i class="fa fa-home fa-lg"></i> Inicio</a></li>
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("MuestraProductos","Productos")" style="font-size: large; color: #666666 "><i class="fa fa-home fa-lg"></i> Inicio</a></li>
                     <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("About","Home")" style="font-size:large;color:#666666"><i class="fa fa-address-book fa-lg"></i> Acerca de</a></li>
                 }
                 else
                 {
-                    @*<li><a href="@Url.Action("DetalleRango","Nivel",new { nombre = ViewBag.rango })"><img src="@Url.Content(ViewBag.rango)" style="width:50px" /></a></li>*@
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("PerfilUsuario", "Usuario")" style="font-size:large;color:#666666">@ViewBag.Usuario</a></li>
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("DetallesUsuario", "Usuario")" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i>@Session["Nombre"]</a></li>
+                    <li><a href="@Url.Action("DetalleRango","Nivel",new { idNivel = Session["Rango"] })"><img src="@Url.Content(Session["ImagenRango"].ToString())" style="width:40px" /></a></li>
                 }
-
             </ul>
         </div>
         <div class="nav navbar-brand justify-content-lg-center">
@@ -56,27 +69,47 @@
                 }
                 else
                 {
-                    if (ViewBag.Usuario != null)
-                    {
-                        <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CarritoPrevia", "Carrito")" style="font-size:large;color:#666666"><i class="fa fa-shopping-cart fa-lg"></i> Carrito</a></li>
-                        <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CerrarSession", "Usuario")" style="font-size:large;color:#666666"><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a></li>
-                    }
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CarritoPrevia", "Carrito")" style="font-size:large;color:#666666"><i class="fa fa-shopping-cart fa-lg"></i> Carrito</a></li>
+                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CerrarSession", "Usuario")" style="font-size:large;color:#666666"><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a></li>
                 }
 
             </ul>
         </div>
     </div>
+    @if (ViewBag.Mensaje != "" && ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-info" role="alert" id="alertaMensajes">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <center><strong>@ViewBag.Mensaje</strong></center>
+        </div>
+    }
     <br /><br /><br /><br />
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Impecable <br /> Isaac Rodríguez Matturen</p>
-        </footer>
     </div>
+    <br /><br /><br /><br />
+    <footer>
+        <div class="footer-content">
+            <p>
+                ImpecableJB
+                <img src="~/Content/logo-ImpecableJB.png" style="width:30px" />
+            </p>
+        </div>
+        <div class="footer-bottom">
+            © 2020 Programación en Ambiente Web II | <a href="">Proyecto ISW-711</a>
 
+            <div class="information">
+                <a href="">Informacion del desarrollador web</a>
+                | <a href="">Privacion y Politica</a> |
+                <a href="">Terminos y Condiciones</a>
+            </div>
+        </div>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/LoginSetUp.js")
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/jquery.validate.min.js"></script>

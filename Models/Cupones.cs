@@ -23,17 +23,24 @@ namespace ImpecableJB.Models
 
         [Required]
         [StringLength(50)]
+        [Display(Name ="Titular cupón")]
         public string titulo { get; set; }
 
         [Required]
+        [Display(Name="Descripción")]
         public string descripcion { get; set; }
 
+        [Display(Name ="Promoción")]
+        [DisplayFormat(DataFormatString ="-?{0:#}")]
         public decimal promocion { get; set; }
 
+        [Display(Name ="Estado")]
         public bool? estado { get; set; }
 
+        [Display(Name="Producto aplicado")]
         public virtual Producto Producto { get; set; }
 
+        [Display(Name="Rango")]
         public virtual Nivel Nivel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
