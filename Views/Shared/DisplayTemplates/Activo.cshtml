@@ -1,0 +1,17 @@
+﻿@model Nullable<bool>
+
+@{
+    bool variable = false;
+    if (Model != null)
+    {
+        variable = (bool)Model;
+    }
+    if (variable)
+    {
+        <text>Activo</text>
+    }
+    else
+    {
+        <text>Inactivo</text>
+    }
+}

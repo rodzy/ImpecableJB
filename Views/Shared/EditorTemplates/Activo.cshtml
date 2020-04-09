@@ -1,0 +1,18 @@
+﻿@model Nullable<bool>
+
+@{ 
+    bool variable = false;
+    if (Model != null)
+    {
+        variable = (bool)Model;
+    }
+}
+
+<div class="form-check">
+    @Html.RadioButton("","true",variable,new { @class="form-check-input"})
+    @Html.Label("Activo", new { @class="form-check-label"})
+</div>
+<div class="form-check">
+    @Html.RadioButton("", "false", !variable, new { @class = "form-check-input" })
+    @Html.Label("Inactivo", new { @class = "form-check-label" })
+</div>

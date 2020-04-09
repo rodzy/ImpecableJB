@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ImpecableJB.Models.Cupones>
+
+@{
+    ViewBag.Title = "Lista cupones";
+}
+
+<h3>Cupones ImplecableJB</h3>
+<p>Esta lista contiene los cupones disponibles hasta el momento se pueden registrar cupones correspondientes a rango y producto</p>
+<p>
+    @Html.ActionLink("Registrar cupones", "RegistrarCupones")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nivel.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.promocion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nivel.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.promocion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idCupones }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idCupones }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idCupones })
+        </td>
+    </tr>
+}
+
+</table>
