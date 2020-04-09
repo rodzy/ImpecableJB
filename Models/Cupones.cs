@@ -31,7 +31,7 @@ namespace ImpecableJB.Models
         public string descripcion { get; set; }
 
         [Display(Name ="Promoción")]
-        [DisplayFormat(DataFormatString ="-?{0:#}")]
+        [DisplayFormat(DataFormatString ="%{0:#}")]
         public decimal promocion { get; set; }
 
         [Display(Name ="Estado")]

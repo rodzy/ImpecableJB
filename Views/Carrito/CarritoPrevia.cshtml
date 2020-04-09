@@ -17,11 +17,10 @@
                         <tr class="cart_menu">
                             <th scope="col" class="image">Producto</th>
                             <th scope="col"></th>
-                            <th scope="col">Descripción</th>
+                            <th scope="col"></th>
                             <th scope="col" class="price">Precio unitario</th>
                             <th scope="col">Cantidad</th>
                             <th scope="col"></th>
-                            <th scope="col">Total</th>
                         </tr>
                     </thead>
                     @foreach (var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
@@ -29,18 +28,17 @@
                         <tbody>
                             <tr>
                                 <td class="cart_product">
-                                    <img src="@Url.Content(item.Producto.imagen)" style="width:80px" />
+                                    <img src="@Url.Content(item.Producto.imagen)" style="width:100px" />
                                 </td>
                                 <td class="cart_description">
-                                    @item.Producto.nombre <br />
+                                    <b>@item.Producto.nombre</b><br />
                                     @item.Producto.descripcion
                                 </td>
                                 <td class="cart_price">
                                     @item.Producto.precio
                                 </td>
                                 <td class="cart_quantity">
-                                    @*AQUI VA EL TOTAL*@
-                                    @item.Producto.precio
+                                    @item.Cantidad
                                 </td>
                                 <td class="cart_product">
                                     @item.Cantidad
@@ -49,7 +47,44 @@
                             </tr>
                         </tbody>
                     }
-                    <tfoot></tfoot>
+                    @*<table>
+                        <thead>
+                            <tr class="cart_menu">
+                                <th scope="col">Cupones disponibles para los articulos del carrito</th>
+                                <th scope="col"></th>
+                                <th scope="col">Descuento</th>
+                                <th scope="col">Aplica para</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        @foreach(var item in Session["Cupones"] as List<ImpecableJB.Models.Cupones>)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product">
+                                        
+                                    </td>
+                                    <td class="cart_description">
+                                        <b>@item.</b><br />
+                                        @item.Producto.descripcion
+                                    </td>
+                                    <td class="cart_price">
+                                        @item.Producto.precio
+                                    </td>
+                                    <td class="cart_quantity">
+                                        @item.Cantidad
+                                    </td>
+                                    <td class="cart_product">
+                                        @item.Cantidad
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>*@
+                    <tfoot>
+                    </tfoot>
                 </table>
             </div>
         </div>

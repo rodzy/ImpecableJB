@@ -1,6 +1,7 @@
 ﻿using ImpecableJB.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,10 +36,12 @@ namespace ImpecableJB.Controllers
             {
                 Session["Usuario"] = user.idUsuario;
                 Session["Rango"] = user.Nivel;
+                Session["Rol"] = user.Rol.descripcion;
                 Session["ImagenRango"] = "~/Content/Rangos/"+user.Nivel.nombre+".png";
+                Session["ListaRangos"] = db.Nivel.ToList();
                 if (user.Rol.descripcion.Equals("Administrador"))
                 {
-                    Session["Nombre"] = "Bienvenido,"+ user.nombre + "(" + user.Rol.descripcion + ")";
+                    Session["Nombre"] = "Bienvenido,"+ user.nombre + "(" + user.Rol.descripcion + ")";                  
                 }
                 else
                 {
@@ -117,6 +120,44 @@ namespace ImpecableJB.Controllers
                 return RedirectToAction("MuestraProductos", "Productos");
             }
             return View("DetallesUsuario", usuario);
+        }
+
+        /// <summary>
+        /// Método que realiza una busqueda de los datos del usuario para cargarlos en modo Editable 
+        /// </summary>
+        /// <param name="id">Identificador del cliente especificado</param>
+        /// <returns></returns>
+        public ActionResult EditarDatosCliente(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No se encuentran los datos del usuario especificado";
+                return RedirectToAction("MuestraProductos","Productos");
+            }
+            Usuario usuario = db.Usuario.Find(id);
+            if (usuario == null)
+            {
+                TempData["Mensaje"] = "No se encuentran los datos del usuario especificado";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            return View(usuario);
+        }
+        /// <summary>
+        /// Método que se apoya de POST para actulizar la información del usuario
+        /// </summary>
+        /// <param name="usuario">Modelo Usuario de la vista EditarDatosCliente</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditarDatosCliente(Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(usuario).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Mensaje"] = "Información de cliente actualizada";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            return View(usuario);
         }
 
         /// <summary>

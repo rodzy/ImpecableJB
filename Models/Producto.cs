@@ -34,7 +34,7 @@
         [Display(Name ="Referencia")]
         public string imagen { get; set; }
 
-        [DisplayFormat(DataFormatString = "₡{0:#}")]
+        [DisplayFormat(DataFormatString = "₡ {0:#}")]
         [Display(Name ="Precio unitario")]
         public decimal precio { get; set; }
 
