@@ -2,6 +2,14 @@
 @{
     ViewBag.Title = "Productos";
 }
+<style>
+    .colorchange:hover {
+        color: #003366;
+    }
+    .colorchang:hover {
+        color: #ffff;
+    }
+</style>
 
 <div class="container">
     <div class="row">
@@ -14,15 +22,16 @@
             <p>Seleccione el tipo de productos que desee mostrar si busca alguno en específico</p>
             <hr />
             <div class="list-group">
-                @Ajax.ActionLink("Para el hogar", "FiltrarProductos", new { idTipo = 1 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action" })
-                @Ajax.ActionLink("Oficinas y centros comerciales", "FiltrarProductos", new { idTipo = 2 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action" })
-                @Ajax.ActionLink("Industrial", "FiltrarProductos", new { idTipo = 3 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action" })
+                @Ajax.ActionLink("Para el hogar", "FiltrarProductos", new { idTipo = 1 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })
+                @Ajax.ActionLink("Oficinas y centros comerciales", "FiltrarProductos", new { idTipo = 2 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })
+                @Ajax.ActionLink("Industrial", "FiltrarProductos", new { idTipo = 3 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })
             </div>
             <hr />
             <br /><br />
         </div>
         <div class="row" id="resultado">
             @{
+                @*Identificadores para poder manejar los items con JavaScript*@
                 int id = 29;
             }
             @foreach (var item in @Model)
@@ -31,11 +40,10 @@
                     <div class="card h-100" style="background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);">
                         <img class="card-img-top" src="@Url.Content(item.imagen)">
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title" style="text-align:center">
                                 @Html.DisplayFor(modelItem => item.nombre)
-                            </h5>
-                            <p class="card-text">
-                                <a id="leer" class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">Detalles del producto</a>
+                            </h5>                          
+                            <p class="card-text" style="text-align:justify center">
                                 <div class="collapse multi-collapse" id="leermas_@id">
                                     @Html.DisplayFor(model => item.descripcion)<br />
                                     <small><b>@Html.LabelFor(model => item.Tipo_Producto): </b>@Html.DisplayFor(model => item.Tipo_Producto.nombre)</small>
@@ -44,7 +52,8 @@
                         </div>
                         <div class="card-footer">
                             <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>
-                            <a class="btn btn-block btn-outline-light" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">Agregar al carrito</a>
+                            <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer"><i class="fa fa-address-book fa-lg"></i> Detalles del producto</a>
+                            <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})"><i class="fa fa-shopping-cart fa-lg"></i> Agregar al carrito</a>
 
                         </div>
                     </div>

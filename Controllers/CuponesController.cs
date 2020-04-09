@@ -46,12 +46,50 @@ namespace ImpecableJB.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Listado de todos los cupones, con finalidad para el usuario Administador
         /// </summary>
         /// <returns></returns>
         public ActionResult ListaCupones()
         {
             return View(db.Cupones.ToList());
         }
+
+        /// <summary>
+        /// Método para modificar el estado del cupón ya sea porque se va a quitar o si ya fue utilizado por el usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EliminarCupon(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No exite el cupón indicado";
+                return RedirectToAction("ListaCupones");
+            }
+            Cupones cupones = db.Cupones.Find(id);
+            if (cupones == null)
+            {
+                TempData["Mensaje"] = "No exite el cupón indicado";
+                return RedirectToAction("ListaCupones");
+            }
+            if (cupones.estado == true) {
+                cupones.estado = false;
+            }
+            else {
+                cupones.estado = true;
+            }
+
+            db.Entry(cupones).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            TempData["Mensaje"] = "Cupón desactivado con éxito";
+
+            return RedirectToAction("ListaCupones");
+            
+        }
+
+        //public ActionResult MuestrarioCupones()
+        //{
+
+        //}
     }
 }

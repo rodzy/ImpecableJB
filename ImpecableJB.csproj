@@ -132,6 +132,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\CuponesController.cs" />
+    <Compile Include="Controllers\DetallePedidoController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -339,9 +341,14 @@
     <Content Include="Views\Usuario\RegistroCliente.cshtml" />
     <Content Include="Views\Usuario\DetallesUsuario.cshtml" />
     <Content Include="Views\Cupones\RegistrarCupones.cshtml" />
+    <Content Include="Views\Cupones\ListaCupones.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Activo.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Activo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DetallePedido\" />
+    <Folder Include="Views\Pedido\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
