@@ -107,5 +107,60 @@ namespace ImpecableJB.Controllers
             }       
             return View("CarritoPrevia");
         }
+
+        /// <summary>
+        /// Metodo para confirmar el pago
+        /// Introduce en la base de datos el pedido y el detalle de pedido
+        /// Aplica los calculos por si aplica descuentos con un cupon
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ConfirmarPago()
+        {
+            if (Session["Usuario"] == null)
+            {
+                return RedirectToAction("InicioClientes", "Usuario");
+            }
+            else
+            {
+                Pedido pedido = new Pedido();
+                Detalle_Pedido detalle_Pedido = new Detalle_Pedido();
+
+                decimal total = 0;
+                
+                foreach(var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
+                {
+                    Cupones cupones = Context.Cupones.Where(x => x.idProducto == item.Producto.idProducto && x.idNivel==Convert.ToInt32(Session["Rango"])).FirstOrDefault();
+                    if (cupones != null)
+                    {
+                        total += item.Producto.precio * item.Cantidad / Decimal.Multiply(cupones.promocion, Convert.ToDecimal(0.10));
+                        pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
+                        pedido.fecha_hora = DateTime.Now;
+                        pedido.total = total;
+                        Context.Pedido.Add(pedido);
+                        Context.SaveChanges();
+                    }
+                    else
+                    {
+                        total += item.Producto.precio * item.Cantidad;
+                        pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
+                        pedido.fecha_hora = DateTime.Now;
+                        pedido.total = total;
+                        Context.Pedido.Add(pedido);
+                        Context.SaveChanges();
+                    }
+                    detalle_Pedido.idPedido = pedido.idPedido;
+                    detalle_Pedido.idProducto = item.Producto.idProducto;
+                    detalle_Pedido.idCupones = cupones.idCupones;
+                    detalle_Pedido.cantidad = item.Cantidad;
+                    detalle_Pedido.descuento = cupones.promocion;
+                    Context.Detalle_Pedido.Add(detalle_Pedido);
+                    Context.SaveChanges();
+
+                    //TODO: Testing y retoque
+                }
+                
+            }
+            return View();
+        }
     }
 }

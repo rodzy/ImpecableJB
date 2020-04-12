@@ -49,6 +49,7 @@ namespace ImpecableJB.Models
         public string contrasena { get; set; }
 
         [Display(Name ="Estado")]
+        [UIHint("Activo")]
         public bool? estado { get; set; }
 
         [Display(Name="Rango")]

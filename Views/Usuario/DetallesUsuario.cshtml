@@ -4,79 +4,116 @@
     ViewBag.Title = "Detalles usuario";
 }
 
-<h2>DetallesUsuario</h2>
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 text-white text-center " style="background-color:#80aaff">
+                <div class=" ">
+                    <div class="card-body">
+                        <img src="~/Content/Icons/businessman.png" style="width:30%" />
+                        <h2 class="py-3">Detalles</h2>
+                        <p>
+                            Verifique sus datos de usuario así como los pedidos realizados
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+                <h4 class="pb-4">Información del usuario</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayName("Rango de usuario")
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Nivel.nombre)<img src="@Url.Content("~/Content/Rangos/"+Model.Nivel.nombre+".png")" style="width:50px" /><br />
+                        <b>Beneficios:</b>@Html.DisplayFor(model => model.Nivel.beneficios)
+                        <hr />
+                    </dd>
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nivel.nombre)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </dt>
+                    @if (Model.apellido2 == null)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido1)
+                            <hr />
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido1) @Html.DisplayNameFor(model => model.apellido2)
+                            <hr />
+                        </dd>
+                    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Nivel.nombre)
-        </dd>
+                    <dt>
+                        @Html.DisplayName("Credenciales de inicio")
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rol.descripcion)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.correoElectronico)
+                    </dd>
+                    @if (!Session["Rol"].ToString().Equals("Administrador"))
+                    {
+                        @Html.HiddenFor(model => model.contrasena);
 
-        <dd>
-            @Html.DisplayFor(model => model.Rol.descripcion)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.estado)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.estado)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.apellido1)
-        </dt>
+                    }
+                    else
+                    {
+                        <dd>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                Mostrar contraseña
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Contraseña - @Html.DisplayFor(model => model.correoElectronico)</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @Html.DisplayFor(model => model.contrasena)
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br /><hr />
+                        </dd>
+                    }
+                    <dt>
+                        @Html.DisplayName("Acciones de usuario")
+                    </dt>
+                    <dd>
+                        @Html.ActionLink("Editar información", "EditarDatosCliente", new { id = Model.idUsuario }, new { @class = "btn btn-success" }) @Html.ActionLink("Eliminar información", "EliminarUsuario", new { id = Model.idUsuario }, new { @class = "btn btn-danger" })
+                    </dd>
+                </dl>
+                <a href="@Url.Action("MuestraProductos","Productos")" class="btn btn-primary">Volver al inicio</a> 
+            </div>
+        </div>
+    </div>
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.apellido1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.apellido2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.apellido2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.correoElectronico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.correoElectronico)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.contrasena)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.contrasena)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.idUsuario }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<script>
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#exampleModalCenter').trigger('focus')
+    })
+</script>

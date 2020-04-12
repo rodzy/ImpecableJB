@@ -1,4 +1,4 @@
-namespace ImpecableJB.Models
+﻿namespace ImpecableJB.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,14 +17,20 @@ namespace ImpecableJB.Models
 
         public int idCupones { get; set; }
 
+        [Display(Name ="Cantidad")]
         public int cantidad { get; set; }
 
+        [Display(Name ="Descuento aplicado")]
+        [DisplayFormat(DataFormatString = "%{0:#}")]
         public decimal descuento { get; set; }
 
+        [Display(Name ="Cupones aplicados")]
         public virtual Cupones Cupones { get; set; }
 
+        [Display(Name="Encabezado del pedido")]
         public virtual Pedido Pedido { get; set; }
 
+        [Display(Name ="Productos")]
         public virtual Producto Producto { get; set; }
     }
 }

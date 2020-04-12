@@ -55,7 +55,9 @@
                     if (Session["Rol"].Equals("Administrador"))
                     {
                         <li class="nav-item dropdown underlineHover">
-                            <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i> @Session["Nombre"]</a>
+                            <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666">
+                                <img src="~/Content/Icons/account.png" style="width:30px" /> @Session["Nombre"]
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarUsuario">
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Detalles del usuario</a>
                                 <a class="dropdown-item" href="@Url.Action("EditarDatosCliente", "Usuario", new { id=Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-edit"></i> Modificar información</a>
@@ -63,11 +65,19 @@
                                 <a class="dropdown-item" href="@Url.Action("ModificarContrasena", "Usuario", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 "><i class="fa fa-layer-group"></i> Cambiar contraseña</a>
                             </div>
                         </li>
-                        <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("RegistrarCupones","Cupones")" style="font-size:large;color:#666666"><i class="fa fa-ticket"></i> Registrar cupones</a></li>
+                        <li class="nav-item dropdown underlineHover">
+                            <a class="nav-link active dropdown-toggle" id="navbarCupones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-ticket"></i> Control de cupones</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarCupones" style="background-color: #e6f3ff">
+                                <a class="dropdown-item" href="@Url.Action("RegistrarCupones", "Cupones")" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Registar cupones</a>
+                                <a class="dropdown-item" href="@Url.Action("ListaCupones", "Cupones")" style="font-size: large; color: #666666 "><i class="fa fa-edit"></i> Listado de cupones</a>
+                            </div>
+                        </li> 
+                        <li class="nav-item underlineHover"></li>
                     }
                     else
                     {
-                        <li class="nav-item dropdown underlineHover">
+                        
+                        <li class="nav-item dropdown underlineHover">                           
                             <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i> @Session["Nombre"]</a>
                             <div class="dropdown-menu" aria-labelledby="navbarUsuario">
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Detalles del usuario</a>

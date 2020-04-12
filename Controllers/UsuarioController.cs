@@ -161,6 +161,45 @@ namespace ImpecableJB.Controllers
         }
 
         /// <summary>
+        /// Método para eliminar de manera lógica una cuenta de un usuario tipo cliente
+        /// </summary>
+        /// <param name="id">Identificador del usuario</param>
+        /// <returns></returns>
+        public ActionResult EliminarUsuario(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No se encuentran los datos del usuario especificado";
+                if (Session["Rol"].ToString().Equals("Administrador"))
+                {
+                    return RedirectToAction("ListaUsuarios");
+                }
+                else
+                {
+                    return RedirectToAction("DetallesUsuario");
+                }
+            }
+            Usuario usuario = db.Usuario.Find(id);
+            if (usuario == null)
+            {
+                TempData["Mensaje"] = "No se encuentran los datos de usuario especificado";
+                return RedirectToAction("DetallesUsuario");
+            }
+            if (usuario.estado==true)
+            {
+                usuario.estado = false;
+            }
+            else
+            {
+                usuario.estado = true;
+            }
+            db.Entry(usuario).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["Mensaje"] = "Usuario eliminado con éxito";
+            return RedirectToAction("MuestraProductos", "Producto");
+        }
+
+        /// <summary>
         /// Método que retorna una lista de usaurios para el control por el administrador
         /// </summary>
         /// <returns></returns>

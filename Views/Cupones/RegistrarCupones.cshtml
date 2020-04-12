@@ -15,7 +15,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Producto, "idProducto", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idProducto, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.idProducto,(SelectList)ViewBag.idProductos, "Seleccione", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idProducto, "", new { @class = "text-danger" })
@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Nivel, "idNivel", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idNivel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("idNivel", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idNivel, "", new { @class = "text-danger" })

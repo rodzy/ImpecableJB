@@ -23,8 +23,12 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
+                    @{ 
+                        decimal total = 0;
+                    }
                     @foreach (var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
                     {
+                        total += item.Producto.precio*item.Cantidad;
                         <tbody>
                             <tr>
                                 <td class="cart_product">
@@ -84,8 +88,14 @@
                         }
                     </table>*@
                     <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right"><b>Total:</b>₡ @total </td>
+                        </tr>
                     </tfoot>
                 </table>
+                <div>
+                    @Html.ActionLink("Confirmar compra", "ConfirmarPago", "Carrito", new { @class = "btn btn-success" }) @Html.ActionLink("Volver al inicio", "MuestraProductos", "Producto", new { @class="btn btn-primary"})
+                </div>
             </div>
         </div>
     </section>

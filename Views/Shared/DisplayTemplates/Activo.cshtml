@@ -1,0 +1,17 @@
+﻿@model Nullable<bool>
+
+@{
+    bool variable = false;
+    if (Model != null)
+    {
+        variable = (bool)Model;
+    }
+    if (variable)
+    {
+        <span class="badge badge-pill badge-success">Activo</span>
+    }
+    else
+    {
+        <span class="badge badge-pill badge-secondary">Inactivo</span>      
+    }
+}
