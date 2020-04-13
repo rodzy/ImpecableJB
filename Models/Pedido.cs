@@ -32,6 +32,7 @@
         public decimal total { get; set; }
 
         [Display(Name ="Estado del pedido")]
+        [UIHint("Activo")]
         public bool? estado { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

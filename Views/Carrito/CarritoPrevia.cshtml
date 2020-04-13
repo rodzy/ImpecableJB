@@ -47,7 +47,9 @@
                                 <td class="cart_product">
                                     @item.Cantidad
                                 </td>
-                                <td></td>
+                                <td>
+                                    <i class="fa fa-times-circle"></i>
+                                </td>
                             </tr>
                         </tbody>
                     }
@@ -94,7 +96,7 @@
                     </tfoot>
                 </table>
                 <div>
-                    @Html.ActionLink("Confirmar compra", "ConfirmarPago", "Carrito", new { @class = "btn btn-success" }) @Html.ActionLink("Volver al inicio", "MuestraProductos", "Producto", new { @class="btn btn-primary"})
+                    @Html.ActionLink("Confirmar compra", "ConfirmarPago", "Carrito", new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
                 </div>
             </div>
         </div>

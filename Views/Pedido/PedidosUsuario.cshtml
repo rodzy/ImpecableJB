@@ -1,0 +1,25 @@
+﻿@model ImpecableJB.Models.Usuario
+
+@{
+    ViewBag.Title = "Buscar pedidos por correo";
+}
+
+<h2>Buscar por correo electrónico</h2>
+<h5>Introduzca el correo de eletrónico del usuario que desea cargar los pedidos</h5>
+@using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "resultado" }))
+{
+    @*TODO : FUNCIONALIDAD DEL BEGIN FORM*@
+    @Html.LabelFor(model => model.correoElectronico, htmlAttributes: new { @class = "control-label col-md-2" })
+    <br />
+    @Html.EditorFor(model => model.correoElectronico, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+    <input type="submit" class="btn btn-primary" value="Buscar" />
+}
+<div id="resultado">
+
+</div>
+
+
+
+
+

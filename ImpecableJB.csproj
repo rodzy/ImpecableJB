@@ -164,6 +164,7 @@
     <Content Include="Content\footer.css" />
     <Content Include="Content\header-ImpecableJB.png" />
     <Content Include="Content\Icons\account.png" />
+    <Content Include="Content\Icons\book.png" />
     <Content Include="Content\Icons\businessman.png" />
     <Content Include="Content\LayoutMaster.css" />
     <Content Include="Content\Login.css" />
@@ -348,11 +349,13 @@
     <Content Include="Views\Shared\EditorTemplates\Activo.cshtml" />
     <Content Include="Views\Usuario\EditarDatosCliente.cshtml" />
     <Content Include="Views\Usuario\ListaUsuarios.cshtml" />
+    <Content Include="Views\Pedido\ListaPedidos.cshtml" />
+    <Content Include="Views\DetallePedido\MuestraDetalle.cshtml" />
+    <Content Include="Views\Pedido\PedidosUsuario.cshtml" />
+    <Content Include="Views\Pedido\_PedidosUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DetallePedido\" />
-    <Folder Include="Views\Pedido\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

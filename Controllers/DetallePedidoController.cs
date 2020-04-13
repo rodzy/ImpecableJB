@@ -13,9 +13,15 @@ namespace ImpecableJB.Controllers
         ImpecableContext db = new ImpecableContext();
         
         // GET: DetallePedido
-        public ActionResult Index()
+        /// <summary>
+        /// Método que carga los detalles de el pedido selecciondo por el usuario
+        /// </summary>
+        /// <param name="id">Identificador del pedido</param>
+        /// <returns></returns>
+        public ActionResult MuestraDetalle(int? id)
         {
-            return View();
+            Detalle_Pedido detalle = db.Detalle_Pedido.Where(x => x.idPedido == id).FirstOrDefault();
+            return View(detalle);
         }
 
 

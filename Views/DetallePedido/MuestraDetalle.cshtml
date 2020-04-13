@@ -1,0 +1,57 @@
+﻿@model ImpecableJB.Models.Detalle_Pedido
+
+@{
+    ViewBag.Title = "Detalle pedido";
+}
+
+<h2>Detalle del pedido</h2>
+
+<div>
+    <h4>Información detallada para el pedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cupones.titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cupones.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pedido.idPedido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pedido.idPedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Producto.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Producto.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descuento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descuento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("ListaPedidos","Pedido")" class="btn btn-primary">Volver a la lista de pedidos</a>
+</p>

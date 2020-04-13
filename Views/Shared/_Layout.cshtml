@@ -9,6 +9,8 @@
     <link href="~/Content/footer.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <style>
         .underlineHover:after {
             display: block;
@@ -28,6 +30,7 @@
             .underlineHover:hover:after {
                 width: 100%;
             }
+
         body::-webkit-scrollbar {
             width: 0.50rem;
         }
@@ -59,20 +62,50 @@
                                 <img src="~/Content/Icons/account.png" style="width:30px" /> @Session["Nombre"]
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarUsuario">
-                                <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Detalles del usuario</a>
-                                <a class="dropdown-item" href="@Url.Action("EditarDatosCliente", "Usuario", new { id=Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-edit"></i> Modificar información</a>
-                                <a class="dropdown-item" href="@Url.Action("PedidosUsuario", "Pedido", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 "><i class="fa fa-history"></i> Historial de pedidos</a>
-                                <a class="dropdown-item" href="@Url.Action("ModificarContrasena", "Usuario", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 "><i class="fa fa-layer-group"></i> Cambiar contraseña</a>
+                                <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        contact_mail
+                                    </span> Detalles del usuario
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("ListaUsuarios", "Usuario", new { id=Session["Usuario"] })" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        folder_shared
+                                    </span>Lista de usuarios
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("RegistroCliente", "Usuario", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        person_add
+                                    </span> Registrar usuarios
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("PedidosUsuarios", "Pedido", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        style
+                                    </span> Historial de pedidos
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("ModificarContrasena", "Usuario", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
+                                    <i class="fa fa-layer-group"></i> Cambiar contraseña
+                                </a>
                             </div>
                         </li>
                         <li class="nav-item dropdown underlineHover">
-                            <a class="nav-link active dropdown-toggle" id="navbarCupones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-ticket"></i> Control de cupones</a>
+                            <a class="nav-link active dropdown-toggle" id="navbarCupones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666">
+                                <span class="material-icons">
+                                    local_activity
+                                </span> Control de cupones
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarCupones" style="background-color: #e6f3ff">
-                                <a class="dropdown-item" href="@Url.Action("RegistrarCupones", "Cupones")" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Registar cupones</a>
-                                <a class="dropdown-item" href="@Url.Action("ListaCupones", "Cupones")" style="font-size: large; color: #666666 "><i class="fa fa-edit"></i> Listado de cupones</a>
+                                <a class="dropdown-item" href="@Url.Action("RegistrarCupones", "Cupones")" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        folder_special
+                                    </span> Registar cupones
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("ListaCupones", "Cupones")" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons">
+                                        menu_book
+                                    </span> Listado de cupones
+                                </a>
                             </div>
-                        </li> 
-                        <li class="nav-item underlineHover"></li>
+                        </li>
                     }
                     else
                     {
@@ -109,13 +142,31 @@
             <ul class="nav navbar-nav">
                 @if (Session["Usuario"] == null)
                 {
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("InicioClientes","Usuario")" style="font-size: large; color: #666666"><i class="fa fa-user fa-lg"></i> Iniciar sesión</a></li>
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CarritoPrevia","Carrito")" style="font-size:large;color:#666666"><i class="fa fa-shopping-cart fa-lg"></i> Carrito</a></li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("InicioClientes","Usuario")" style="font-size: large; color: #666666">
+                            <span class="material-icons">person</span> Iniciar sesión
+                        </a>
+                    </li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("CarritoPrevia","Carrito")" style="font-size:large;color:#666666">
+                            <span class="material-icons">shopping_cart</span> Carrito
+                        </a>
+                    </li>
                 }
                 else
                 {
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CarritoPrevia", "Carrito")" style="font-size:large;color:#666666"><i class="fa fa-shopping-cart fa-lg"></i> Carrito</a></li>
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("CerrarSession", "Usuario")" style="font-size:large;color:#666666"><i class="fa fa-sign-out-alt"></i>Cerrar sesión</a></li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("CarritoPrevia", "Carrito")" style="font-size:large;color:#666666">
+                            <span class="material-icons">shopping_cart</span> Carrito
+                        </a>
+                    </li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("CerrarSession", "Usuario")" style="font-size:large;color:#666666">
+                            <span class="material-icons">
+                                meeting_room
+                            </span>Cerrar sesión
+                        </a>
+                    </li>
                 }
 
             </ul>

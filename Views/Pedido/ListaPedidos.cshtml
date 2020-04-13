@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ImpecableJB.Models.Pedido>
+
+@{
+    ViewBag.Title = "ListaPedidos";
+}
+
+<h2>ListaPedidos</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@if (TempData.ContainsKey("Pedidos"))
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["Pedidos"].ToString();
+    </div>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuario.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_hora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "MuestraDetalle","DetallePedido", new { id = item.idPedido }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.idPedido })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
