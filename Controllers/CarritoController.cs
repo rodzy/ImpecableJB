@@ -21,26 +21,29 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult AgregarCarrito(int id)
         {
-            //Agrega por primeera vez un producto al carrito
-            if (Session["Carrito"] == null)
+            if (Request.HttpMethod != "POST")
             {
-                List<CarritoItem> CarritoNuevo = new List<CarritoItem>();
-                CarritoNuevo.Add(new CarritoItem(Context.Producto.Find(id), 1));
-                Session["Carrito"] = CarritoNuevo;
-            }
-            else
-            {
-                List<CarritoItem> CarritoRecurrente = (List<CarritoItem>)Session["Carrito"];
-                int index = GetIndex(id);
-                if (index==-1)
+                //Agrega por primeera vez un producto al carrito
+                if (Session["Carrito"] == null)
                 {
-                    CarritoRecurrente.Add(new CarritoItem(Context.Producto.Find(id), 1));
-                    Session["Carrito"] = CarritoRecurrente;
+                    List<CarritoItem> CarritoNuevo = new List<CarritoItem>();
+                    CarritoNuevo.Add(new CarritoItem(Context.Producto.Find(id), 1));
+                    Session["Carrito"] = CarritoNuevo;
                 }
                 else
                 {
-                    CarritoRecurrente[index].Cantidad++;
-                    Session["Carrito"] = CarritoRecurrente;
+                    List<CarritoItem> CarritoRecurrente = (List<CarritoItem>)Session["Carrito"];
+                    int index = GetIndex(id);
+                    if (index == -1)
+                    {
+                        CarritoRecurrente.Add(new CarritoItem(Context.Producto.Find(id), 1));
+                        Session["Carrito"] = CarritoRecurrente;
+                    }
+                    else
+                    {
+                        CarritoRecurrente[index].Cantidad++;
+                        Session["Carrito"] = CarritoRecurrente;
+                    }
                 }
             }
             TempData["Mensaje"] = "Añadido al carrito";
@@ -63,12 +66,15 @@ namespace ImpecableJB.Controllers
         public int GetIndex(int id)
         {
             List<CarritoItem> car = (List<CarritoItem>)Session["Carrito"];
-            for (int i = 0; i < car.Count; i++)
+            if (car != null)
             {
-                if (car[i].Producto.idProducto == id)
+                for (int i = 0; i < car.Count; i++)
                 {
-                    return i;
-                }             
+                    if (car[i].Producto.idProducto == id)
+                    {
+                        return i;
+                    }
+                }
             }
             return -1;
         }
@@ -80,7 +86,14 @@ namespace ImpecableJB.Controllers
         public ActionResult EliminarElemento(int id)
         {
             List<CarritoItem> carritoItems = (List<CarritoItem>)Session["Carrito"];
-            carritoItems.RemoveAt(GetIndex(id));
+            if (carritoItems != null)
+            {
+                carritoItems.RemoveAt(GetIndex(id));
+                if (carritoItems.Count == 0)
+                {
+                    Session["Carrito"] = null;
+                }
+            }
             return View("CarritoPrevia");
         }
 

@@ -47,12 +47,14 @@
                                 <div class="collapse multi-collapse" id="leermas_@id">
                                     @Html.DisplayFor(model => item.descripcion)<br />
                                     <small><b>@Html.LabelFor(model => item.Tipo_Producto): </b>@Html.DisplayFor(model => item.Tipo_Producto.nombre)</small>
+                                    @*TODO: Pensar como insertar el cupón de una vez acá*@
                                 </div>
                             </p>
                         </div>
                         <div class="card-footer">
                             <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>
-                            <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer"><i class="fa fa-address-book fa-lg"></i> Detalles del producto</a>
+                            <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">
+                            <i class="fa fa-address-book fa-lg"></i> Detalles del producto</a>
                             <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})"><i class="fa fa-shopping-cart fa-lg"></i> Agregar al carrito</a>
 
                         </div>

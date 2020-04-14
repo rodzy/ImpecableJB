@@ -48,7 +48,10 @@
                                     @item.Cantidad
                                 </td>
                                 <td>
-                                    <i class="fa fa-times-circle"></i>
+                                    <a href="@Url.Action("EliminarElemento","Carrito",new { id=item.Producto.idProducto})"><span class="material-icons">
+                                        clear
+                                    </span></a>
+                                    
                                 </td>
                             </tr>
                         </tbody>

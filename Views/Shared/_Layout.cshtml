@@ -50,8 +50,20 @@
             <ul class="nav navbar-nav">
                 @if (Session["Usuario"] == null)
                 {
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("MuestraProductos","Productos")" style="font-size: large; color: #666666 "><i class="fa fa-home fa-lg"></i> Inicio</a></li>
-                    <li class="nav-item underlineHover"><a class="nav-link active" href="@Url.Action("RegistroCliente","Usuario")" style="font-size:large;color:#666666"><i class="fa fa-address-book fa-lg"></i> Registrate acá</a></li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("MuestraProductos","Productos")" style="font-size: large; color: #666666 ">
+                            <span class="material-icons">
+                                home
+                            </span> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item underlineHover">
+                        <a class="nav-link active" href="@Url.Action("RegistroCliente","Usuario")" style="font-size:large;color:#666666">
+                            <span class="material-icons">
+                                description
+                            </span> Registrate acá
+                        </a>
+                    </li>
                 }
                 else
                 {
@@ -90,7 +102,7 @@
                         <li class="nav-item dropdown underlineHover">
                             <a class="nav-link active dropdown-toggle" id="navbarCupones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666">
                                 <span class="material-icons">
-                                    local_activity
+                                    local_offer
                                 </span> Control de cupones
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarCupones" style="background-color: #e6f3ff">
@@ -109,8 +121,8 @@
                     }
                     else
                     {
-                        
-                        <li class="nav-item dropdown underlineHover">                           
+
+                        <li class="nav-item dropdown underlineHover">
                             <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i> @Session["Nombre"]</a>
                             <div class="dropdown-menu" aria-labelledby="navbarUsuario">
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 "><i class="fa fa-info-circle"></i> Detalles del usuario</a>
@@ -124,10 +136,10 @@
                             <a class="dropdown-toggle" id="navbarNivel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @*href="@Url.Action("DetalleRango", "Nivel", new { idNivel = Session["Rango"] })"*@><img src="@Url.Content(Session["ImagenRango"].ToString())" style="width:40px" /></a>
                             <div class="dropdown-menu" aria-labelledby="navbarNivel">
                                 <img class="dropdown-item" src="~/Content/Rangos/Sin Rango.png" style="width:20px" />
-                                <img class="dropdown-item" src="~/Content/Rangos/Bronce.png" style="width:20px"/> <h5 class="dropdown-item-text">Beneficios</h5>
-                                <img class="dropdown-item" src="~/Content/Rangos/Plata.png" style="width:20px"/>
-                                <img class="dropdown-item" src="~/Content/Rangos/Oro.png" style="width:20px"/>
-                                <img class="dropdown-item" src="~/Content/Rangos/Diamante.png" style="width:20px"/>
+                                <img class="dropdown-item" src="~/Content/Rangos/Bronce.png" style="width:20px" /> <h5 class="dropdown-item-text">Beneficios</h5>
+                                <img class="dropdown-item" src="~/Content/Rangos/Plata.png" style="width:20px" />
+                                <img class="dropdown-item" src="~/Content/Rangos/Oro.png" style="width:20px" />
+                                <img class="dropdown-item" src="~/Content/Rangos/Diamante.png" style="width:20px" />
                             </div>
                         </li>
 

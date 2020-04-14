@@ -43,16 +43,11 @@ namespace ImpecableJB.Controllers
         /// <summary>
         /// Método para cargar la vista de los pedidos de usuario por el correo del usuario
         /// </summary>
-        /// <param name="correo">Correo del usuario</param>
+        /// <param name="us">Model usuario</param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult PedidosUsuario(string correo)
+        public ActionResult BuscarCorreo(Usuario us)
         {
-            if(correo.Equals("") || correo == null)
-            {
-                ViewBag.ValidaCorreo = "El campo de correo es requerido";
-            }
-            Usuario usuario = db.Usuario.Where(x => x.correoElectronico.Equals(correo)).FirstOrDefault();
+            Usuario usuario = db.Usuario.Where(x => x.correoElectronico.Equals(us.correoElectronico)).FirstOrDefault();
             if (usuario != null)
             {
                 List<Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario).ToList();
