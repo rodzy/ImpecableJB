@@ -47,7 +47,6 @@ namespace ImpecableJB.Controllers
                 {
                     Session["Nombre"] = "Bienvenido," + user.nombre;
                 }
-                   
                 return RedirectToAction("MuestraProductos","Productos");
             }
             else

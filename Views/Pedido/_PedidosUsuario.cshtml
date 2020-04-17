@@ -4,10 +4,10 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Usuario.nombre)
+                @Html.DisplayNameFor(model => model.fecha_hora)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.fecha_hora)
+                @Html.DisplayNameFor(model => model.Usuario.nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.total)
@@ -20,23 +20,23 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Usuario.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fecha_hora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.estado)
-                </td>
-                <td>
-                    @Html.ActionLink("Detalles", "MuestraDetalle", "DetallePedido", new { id = item.idPedido })
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_hora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.ActionLink("Detalles del pedido", "MuestraDetalle", "DetallePedido", new { id = item.idPedido })
+        </td>
+    </tr>
         }
 
     </table>

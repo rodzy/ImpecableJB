@@ -47,7 +47,6 @@
                                 <div class="collapse multi-collapse" id="leermas_@id">
                                     @Html.DisplayFor(model => item.descripcion)<br />
                                     <small><b>@Html.LabelFor(model => item.Tipo_Producto): </b>@Html.DisplayFor(model => item.Tipo_Producto.nombre)</small>
-                                    @*TODO: Pensar como insertar el cupón de una vez acá*@
                                 </div>
                             </p>
                         </div>
@@ -58,12 +57,12 @@
                                     chrome_reader_mode
                                 </span> Detalles del producto
                             </a>
+
                             <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">
                                 <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                     add_shopping_cart
                                 </span> Agregar al carrito
                             </a>
-
                         </div>
                     </div>
                 </div>

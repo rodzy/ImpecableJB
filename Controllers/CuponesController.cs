@@ -16,7 +16,10 @@ namespace ImpecableJB.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// Cargando la vista del registro de cupones
+        /// </summary>
+        /// <returns></returns>
         public ActionResult RegistrarCupones()
         {
             ViewBag.idProductos = new SelectList(db.Producto, "idProducto", "nombre");

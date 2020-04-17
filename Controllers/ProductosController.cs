@@ -20,6 +20,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult MuestraProductos()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             return View(db.Producto.ToList());
         }
 

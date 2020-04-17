@@ -22,7 +22,7 @@
         [Display(Name ="Código del usuario")]
         public int idUsuario { get; set; }
 
-        [Display(Name ="Fecha de la compra")]
+        [Display(Name ="Fecha del pedido")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fecha_hora { get; set; }

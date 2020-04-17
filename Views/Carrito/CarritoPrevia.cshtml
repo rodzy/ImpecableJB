@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "CarritoPrevia";
 }
-<link rel="stylesheet" href="~/Content/Carrito.css"/> 
+<link rel="stylesheet" href="~/Content/Carrito.css" />
 
 <h4>ImpecableJB - Carrito de compras</h4>
 <p>Instrucciones para el uso del carrito</p>
@@ -13,7 +13,7 @@
         <div class="container">
             <div class="table-responsive cart_info">
                 <table class="table table-condensed">
-                    <thead class="thead-light">
+                    <thead>
                         <tr class="cart_menu">
                             <th scope="col" class="image">Producto</th>
                             <th scope="col"></th>
@@ -22,12 +22,12 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    @{ 
+                    @{
                         decimal total = 0;
                     }
                     @foreach (var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
                     {
-                        total += item.Producto.precio*item.Cantidad;
+                        total += item.Producto.precio * item.Cantidad;
                         <tbody>
                             <tr>
                                 <td class="cart_product">
@@ -44,79 +44,46 @@
                                     @item.Cantidad
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("EliminarElemento","Carrito",new { id=item.Producto.idProducto})"><span class="material-icons">
-                                        clear
-                                    </span></a>
-                                    
+                                    <a href="@Url.Action("EliminarElemento","Carrito",new { id=item.Producto.idProducto})">
+                                        <span class="material-icons">
+                                            clear
+                                        </span>
+                                    </a>
+
                                 </td>
                             </tr>
                         </tbody>
-                    }                  
-                    @*<table>
-                        <thead>
-                            <tr class="cart_menu">
-                                <th scope="col">Cupones disponibles para los articulos del carrito</th>
-                                <th scope="col"></th>
-                                <th scope="col">Descuento</th>
-                                <th scope="col">Aplica para</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        @foreach(var item in Session["Cupones"] as List<ImpecableJB.Models.Cupones>)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td class="cart_product">
-                                        
-                                    </td>
-                                    <td class="cart_description">
-                                        <b>@item.</b><br />
-                                        @item.Producto.descripcion
-                                    </td>
-                                    <td class="cart_price">
-                                        @item.Producto.precio
-                                    </td>
-                                    <td class="cart_quantity">
-                                        @item.Cantidad
-                                    </td>
-                                    <td class="cart_product">
-                                        @item.Cantidad
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        }
-                    </table>*@
+                    }
                     <tfoot>
-                        <tr>
-                            <td colspan="3" class="text-right">
-                                @*Forma para asignar el cupón por el código designado en el muestrario de cupones*@
-                                <p>Código de descuento: </p> @Html.Editor("idCupon") @Html.ActionLink("Usar cupón", "AsignarCupon", "Cupones", "idCupon",new { @class="btn btn-primary"})
-                                <br /> <small>*El descuento será asignado después de confirmar el pedido</small>
-                            </td>
-                        </tr>
                         <tr>
                             <td colspan="4" class="text-right"><b>Total:</b>₡ @total </td>
                         </tr>
                     </tfoot>
                 </table>
-                <div>
-                    @Html.ActionLink("Confirmar compra", "ConfirmarPago", "Carrito", new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
-                </div>
             </div>
         </div>
     </section>
     @*Cargando la vista del partialview *@
     @*TODO: LA PARTE DE LA VISTA PARCIAL Y EL CODIGO DEL CUPON*@
-    <div id="resultado">
-
-    </div>
+<div id="resultado">
+    @if (Session["Usuario"] != null)
+    {
+        <div>
+            @Ajax.ActionLink("Confirmar pedido", "ConfirmarPedido", null, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }, new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.ActionLink("Confirmar pedido", "ConfirmarPedido", new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
+        </div>
+    }
+</div>
 }
 else
 {
     <div class="alert alert-info" role="alert">
-        Su carrito de compras está vacío si desea agregar articulos haga @Html.ActionLink("click aquí", "MuestraProductos", "Productos",null, new {@class="alert-link"})
+        Su carrito de compras está vacío si desea agregar articulos haga @Html.ActionLink("click aquí", "MuestraProductos", "Productos", null, new { @class = "alert-link" })
     </div>
 }
 

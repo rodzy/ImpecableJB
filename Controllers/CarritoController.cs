@@ -47,7 +47,7 @@ namespace ImpecableJB.Controllers
                 }
             }
             TempData["Mensaje"] = "Añadido al carrito";
-            return View("CarritoPrevia");
+            return RedirectToAction("MuestraProductos","Productos");
         }
         /// <summary>
         /// Redirecciona a la página de la visualización del carrito
@@ -127,7 +127,7 @@ namespace ImpecableJB.Controllers
         /// Aplica los calculos por si aplica descuentos con un cupon
         /// </summary>
         /// <returns>PartialView para cargar los datos del pedido en la página del carrito antes de formalizar</returns>
-        public ActionResult ConfirmarPago()
+        public ActionResult ConfirmarPedido()
         {
             Pedido pedido = new Pedido();
             decimal total = 0;
@@ -139,7 +139,7 @@ namespace ImpecableJB.Controllers
                 foreach (var item in Session["Cupones"] as List<Cupones>)
                 {
                     //Total en descuentos por cupones aplicados al final
-                    descuento += Decimal.Divide(item.promocion,100);
+                    descuento += item.promocion / 100;
                 }
             }
             //Recorrer el carrito de compras con todos los items
@@ -157,16 +157,25 @@ namespace ImpecableJB.Controllers
                     total += item.Producto.precio * item.Cantidad;
                 }              
             }
-            //Construcción del objeto pedido
-            Session["Descuento"] = descuento;
-            pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
-            pedido.fecha_hora = DateTime.Now;
-            pedido.total = total;
-            pedido.estado = false;
-            //Guardado en base de datos con el estado en false para que cuando se formaliza la compra se modifica a verdadero
-            Context.Pedido.Add(pedido);
-            Context.SaveChanges();
-            return PartialView("_CarritoPedido",pedido);
+            if (Session["Usuario"] != null)
+            {
+                //Construcción del objeto pedido
+                Session["Descuento"] = descuento;
+                pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
+                pedido.fecha_hora = DateTime.Now;
+                pedido.total = total;
+                pedido.estado = true;
+                //Guardado en base de datos con el estado en false para que cuando se formaliza la compra se modifica a verdadero
+                Context.Pedido.Add(pedido);
+                Context.SaveChanges();
+                return PartialView("_CarritoPedido", pedido);
+            }
+            else
+            {
+                TempData["Mensaje"] = "Para continuar con el pedido debes estár autenticado";
+                return RedirectToAction("InicioClientes","Usuario");
+            }
+            
         }
 
         /// <summary>
@@ -194,10 +203,10 @@ namespace ImpecableJB.Controllers
                     //detalle_Pedido.idCupones = cupones.idCupones;
                     detalle_Pedido.cantidad = item.Cantidad;
                     detalle_Pedido.descuento = Convert.ToDecimal(Session["Descuento"]);
-                    Context.Detalle_Pedido.Add(detalle_Pedido);
-                    Context.SaveChanges();
-                    
+                    Context.Detalle_Pedido.Add(detalle_Pedido); 
                 }
+                Context.SaveChanges();
+
                 ViewBag.Mensaje = "Pedido realizado con éxito";
                 return RedirectToAction("MuestraProductos","Productos");
             }        

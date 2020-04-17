@@ -1,3 +1,45 @@
 ﻿@model ImpecableJB.Models.Pedido
 
-
+    <table class="table table-condensed">
+        <thead class="thead-light">
+            <tr class="cart_menu">
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_hora)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.estado)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.fecha_hora)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Usuario.correoElectronico)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.total)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.estado)
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="1">
+                    <div>
+                        @Html.ActionLink("Formalizar pedido", "ConfirmarPedido", null, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }, new { @class = "btn btn-warning" })
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
