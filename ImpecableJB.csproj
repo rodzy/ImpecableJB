@@ -353,6 +353,8 @@
     <Content Include="Views\DetallePedido\MuestraDetalle.cshtml" />
     <Content Include="Views\Pedido\PedidosUsuario.cshtml" />
     <Content Include="Views\Pedido\_PedidosUsuario.cshtml" />
+    <Content Include="Views\Cupones\MuestrarioCupones.cshtml" />
+    <Content Include="Views\Carrito\_CarritoPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

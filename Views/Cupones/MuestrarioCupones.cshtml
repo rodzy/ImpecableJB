@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ImpecableJB.Models.Cupones>
+
+@{
+    ViewBag.Title = "Muestrario Cupones";
+}
+
+    <div class="row">
+        <div class="col-lg-3">
+            <img src="~/Content/LogoImpecable2.png" />
+        </div>
+        <div class="col-lg-9">
+            <h2>Muestrario de Cupones</h2>
+            <p>
+                A continuación se muestran los cupones disponibles para los usuarios <img src="@Url.Content(Session["ImagenRango"].ToString())" style="width:200px" />
+            </p>
+            <hr />
+            <h3>Productos con promoción</h3>
+        </div>
+    </div>
+        <div class="row">
+            @foreach (var item in @Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100" style="background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);">
+                        <img class="card-img-top" src="@Url.Content(item.Producto.imagen)">
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.titulo)
+                            </h5>
+                            <p class="card-text" style="text-align:justify center">
+                                <div class="collapse multi-collapse" id="leermas_@item.idCupones">
+                                    @Html.DisplayFor(model => item.descripcion)<br />
+                                    <small><b>@Html.LabelFor(model => item.idNivel): </b>@Html.DisplayFor(model => item.Nivel.nombre)</small><br />
+                                    @Html.DisplayFor(modelItem => item.estado)
+                                </div>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <center><h5>@Html.DisplayFor(modelItem => item.promocion)</h5></center>
+                            <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@item.idCupones" aria-expanded="false" aria-controls="colapsableleer">
+                                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                                    card_membership
+                                </span> Detalles del cupón
+                            </a>
+                            <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("CanjearCupon","Carrito",new { id=item.idCupones})">
+                                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                                    loyalty
+                                </span> Canjear cupón
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        

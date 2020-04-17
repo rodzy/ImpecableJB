@@ -38,7 +38,7 @@ namespace ImpecableJB.Controllers
                 Session["Rango"] = user.Nivel;
                 Session["Rol"] = user.Rol.descripcion;
                 Session["ImagenRango"] = "~/Content/Rangos/"+user.Nivel.nombre+".png";
-                Session["ListaRangos"] = db.Nivel.ToList();
+                //Session["ListaRangos"] = db.Nivel.ToList();
                 if (user.Rol.descripcion.Equals("Administrador"))
                 {
                     Session["Nombre"] = "Bienvenido,"+ user.nombre + "(" + user.Rol.descripcion + ")";                  

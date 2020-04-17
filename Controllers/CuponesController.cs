@@ -86,10 +86,43 @@ namespace ImpecableJB.Controllers
             return RedirectToAction("ListaCupones");
             
         }
-
-        //public ActionResult MuestrarioCupones()
-        //{
-
-        //}
+        /// <summary>
+        /// Muestra los cupones disponibles para el usuario logueado en el momento
+        /// juzgando por su rango o nivel de clasificación
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MuestrarioCupones(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No existe el identificador especificado";
+                return RedirectToAction("MuestraProductos","Productos");
+            }
+            Usuario usuario = db.Usuario.Find(id);
+            if (usuario != null)
+            {
+                List<Cupones> cupones = db.Cupones.Where(x => x.idNivel == usuario.idNivel).ToList();
+                return View(cupones);
+            }
+            return View();
+        }
+        /// <summary>
+        /// Se escoge el cupón seleccionado para poder registrarlo como usado por el usuario
+        /// Guardando en una variable Session para facil acceso luego en el Pedido
+        /// </summary>
+        /// <param name="id">Idntificador del cupón seleccionado</param>
+        /// <returns></returns>
+        public ActionResult CanjearCupon(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No existe el identificador especificado";
+                return RedirectToAction("MuestrarioCupones");
+            }
+            List<Cupones> cupones = new List<Cupones>();
+            cupones.Add(db.Cupones.Find(id));
+            Session["Cupones"] = cupones;
+            return View();
+        }
     }
 }

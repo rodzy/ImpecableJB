@@ -54,8 +54,15 @@
                         <div class="card-footer">
                             <center><h5>@Html.DisplayFor(modelItem => item.precio)</h5></center>
                             <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@id" aria-expanded="false" aria-controls="colapsableleer">
-                            <i class="fa fa-address-book fa-lg"></i> Detalles del producto</a>
-                            <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})"><i class="fa fa-shopping-cart fa-lg"></i> Agregar al carrito</a>
+                                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                                    chrome_reader_mode
+                                </span> Detalles del producto
+                            </a>
+                            <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("AgregarCarrito","Carrito",new { id=item.idProducto})">
+                                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                                    add_shopping_cart
+                                </span> Agregar al carrito
+                            </a>
 
                         </div>
                     </div>

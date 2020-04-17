@@ -123,57 +123,84 @@ namespace ImpecableJB.Controllers
 
         /// <summary>
         /// Metodo para confirmar el pago
-        /// Introduce en la base de datos el pedido y el detalle de pedido
+        /// Almacena los calculos del pedido en una session con el pedido construido para luego poder formalizar el detalle 
         /// Aplica los calculos por si aplica descuentos con un cupon
         /// </summary>
-        /// <returns></returns>
+        /// <returns>PartialView para cargar los datos del pedido en la página del carrito antes de formalizar</returns>
         public ActionResult ConfirmarPago()
         {
+            Pedido pedido = new Pedido();
+            decimal total = 0;
+            decimal subtotal = 0;
+            decimal descuento = 0;
+            //Recorrer la lista de Session en donde se guardan los cupones seleccionados por el usaurio
+            if (Session["Cupones"] != null)
+            {
+                foreach (var item in Session["Cupones"] as List<Cupones>)
+                {
+                    //Total en descuentos por cupones aplicados al final
+                    descuento += Decimal.Divide(item.promocion,100);
+                }
+            }
+            //Recorrer el carrito de compras con todos los items
+            foreach(var item in Session["Carrito"] as List<CarritoItem>)
+            {
+                //Total en compras con descuentos aplicados si es que tiene descuentos
+                //CONSULTAR CON LA PROFE: Si el descuento lo realizo por cada producto o es asignado al total
+                if (descuento !=0)
+                {                   
+                    subtotal += (item.Producto.precio * item.Cantidad) * descuento;
+                    total += subtotal - (item.Producto.precio * item.Cantidad);
+                }
+                else
+                {
+                    total += item.Producto.precio * item.Cantidad;
+                }              
+            }
+            //Construcción del objeto pedido
+            Session["Descuento"] = descuento;
+            pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
+            pedido.fecha_hora = DateTime.Now;
+            pedido.total = total;
+            pedido.estado = false;
+            //Guardado en base de datos con el estado en false para que cuando se formaliza la compra se modifica a verdadero
+            Context.Pedido.Add(pedido);
+            Context.SaveChanges();
+            return PartialView("_CarritoPedido",pedido);
+        }
+
+        /// <summary>
+        /// Realiza el proceso de insertar el detalle del pedido a las bases de datos 
+        /// una vez que el usuario se encuentre registrado y con sesión activa
+        /// de lo contrario será redireccionado al inicio de sesión
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult FormalizarCompra(Pedido pedido)
+        {         
+            //Si el usuario no está logueado no puede continuar con la formalización
             if (Session["Usuario"] == null)
             {
                 return RedirectToAction("InicioClientes", "Usuario");
             }
             else
             {
-                Pedido pedido = new Pedido();
-                Detalle_Pedido detalle_Pedido = new Detalle_Pedido();
-
-                decimal total = 0;
-                
-                foreach(var item in Session["Carrito"] as List<ImpecableJB.Models.CarritoItem>)
+                //Recorriendo el carrito para llenar un detalle por cada producto que se quiere registrar
+                foreach (var item in Session["Carrito"] as List<CarritoItem>)
                 {
-                    Cupones cupones = Context.Cupones.Where(x => x.idProducto == item.Producto.idProducto && x.idNivel==Convert.ToInt32(Session["Rango"])).FirstOrDefault();
-                    if (cupones != null)
-                    {
-                        total += item.Producto.precio * item.Cantidad / Decimal.Multiply(cupones.promocion, Convert.ToDecimal(0.10));
-                        pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
-                        pedido.fecha_hora = DateTime.Now;
-                        pedido.total = total;
-                        Context.Pedido.Add(pedido);
-                        Context.SaveChanges();
-                    }
-                    else
-                    {
-                        total += item.Producto.precio * item.Cantidad;
-                        pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
-                        pedido.fecha_hora = DateTime.Now;
-                        pedido.total = total;
-                        Context.Pedido.Add(pedido);
-                        Context.SaveChanges();
-                    }
+                    Detalle_Pedido detalle_Pedido = new Detalle_Pedido();
                     detalle_Pedido.idPedido = pedido.idPedido;
                     detalle_Pedido.idProducto = item.Producto.idProducto;
-                    detalle_Pedido.idCupones = cupones.idCupones;
+                    //La dependencia de idCupones es considerablemente innecesaria para el detalle en mi opinión
+                    //detalle_Pedido.idCupones = cupones.idCupones;
                     detalle_Pedido.cantidad = item.Cantidad;
-                    detalle_Pedido.descuento = cupones.promocion;
+                    detalle_Pedido.descuento = Convert.ToDecimal(Session["Descuento"]);
                     Context.Detalle_Pedido.Add(detalle_Pedido);
                     Context.SaveChanges();
-
-                    //TODO: Testing y retoque
+                    
                 }
-                
-            }
-            return View();
+                ViewBag.Mensaje = "Pedido realizado con éxito";
+                return RedirectToAction("MuestraProductos","Productos");
+            }        
         }
     }
 }

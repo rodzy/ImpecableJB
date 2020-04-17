@@ -17,7 +17,6 @@
                         <tr class="cart_menu">
                             <th scope="col" class="image">Producto</th>
                             <th scope="col"></th>
-                            <th scope="col"></th>
                             <th scope="col" class="price">Precio unitario</th>
                             <th scope="col">Cantidad</th>
                             <th scope="col"></th>
@@ -44,9 +43,6 @@
                                 <td class="cart_quantity">
                                     @item.Cantidad
                                 </td>
-                                <td class="cart_product">
-                                    @item.Cantidad
-                                </td>
                                 <td>
                                     <a href="@Url.Action("EliminarElemento","Carrito",new { id=item.Producto.idProducto})"><span class="material-icons">
                                         clear
@@ -55,7 +51,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                    }
+                    }                  
                     @*<table>
                         <thead>
                             <tr class="cart_menu">
@@ -94,6 +90,13 @@
                     </table>*@
                     <tfoot>
                         <tr>
+                            <td colspan="3" class="text-right">
+                                @*Forma para asignar el cupón por el código designado en el muestrario de cupones*@
+                                <p>Código de descuento: </p> @Html.Editor("idCupon") @Html.ActionLink("Usar cupón", "AsignarCupon", "Cupones", "idCupon",new { @class="btn btn-primary"})
+                                <br /> <small>*El descuento será asignado después de confirmar el pedido</small>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="4" class="text-right"><b>Total:</b>₡ @total </td>
                         </tr>
                     </tfoot>
@@ -104,6 +107,11 @@
             </div>
         </div>
     </section>
+    @*Cargando la vista del partialview *@
+    @*TODO: LA PARTE DE LA VISTA PARCIAL Y EL CODIGO DEL CUPON*@
+    <div id="resultado">
+
+    </div>
 }
 else
 {
