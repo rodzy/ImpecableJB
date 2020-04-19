@@ -11,7 +11,7 @@ namespace ImpecableJB.Controllers
     {
 
         ImpecableContext db = new ImpecableContext();
-        
+
         // GET: DetallePedido
         /// <summary>
         /// Método que carga los detalles de el pedido selecciondo por el usuario
@@ -20,8 +20,12 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult MuestraDetalle(int? id)
         {
-            Detalle_Pedido detalle = db.Detalle_Pedido.Where(x => x.idPedido == id).FirstOrDefault();
-            return View(detalle);
+            if (id == null)
+            {
+                TempData["Mensaje"] = "El pedido no se encuentra registrado";
+                return RedirectToAction("ListaPedidos","Pedido");
+            }
+            return View(db.Detalle_Pedido.Where(x => x.idPedido == id).ToList());
         }
 
 

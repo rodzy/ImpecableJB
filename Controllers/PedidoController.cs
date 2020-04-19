@@ -19,6 +19,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult ListaPedidos()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             List<Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == Convert.ToInt32(Session["Usuario"])).ToList();
             if (pedidos == null)
             {
@@ -55,7 +59,7 @@ namespace ImpecableJB.Controllers
             }
             else
             {
-                ViewBag.ValidaCorreo = "El correo electrónico no se encuentra registrado";
+                TempData["Mensaje"] = "El correo electrónico no se encuentra registrado";
                 return View();
             }
         }
