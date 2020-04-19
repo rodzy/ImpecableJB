@@ -11,7 +11,7 @@ namespace ImpecableJB.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cupones()
         {
-            Detalle_Pedido = new HashSet<Detalle_Pedido>();
+
         }
 
         [Key]
@@ -49,7 +49,6 @@ namespace ImpecableJB.Models
         [Display(Name="Rango")]
         public virtual Nivel Nivel { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Detalle_Pedido> Detalle_Pedido { get; set; }
+
     }
 }

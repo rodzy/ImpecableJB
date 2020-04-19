@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="~/Content/Carrito.css" />
 
 <h4>ImpecableJB - Carrito de compras</h4>
-<p>Instrucciones para el uso del carrito</p>
+<p>Desde el carrito de compras podrá monitorear sus con</p>
 <br />
 @if (Session["Carrito"] != null)
 {
@@ -13,7 +13,7 @@
         <div class="container">
             <div class="table-responsive cart_info">
                 <table class="table table-condensed">
-                    <thead>
+                    <thead style="background-color:cornflowerblue; color:white">
                         <tr class="cart_menu">
                             <th scope="col" class="image">Producto</th>
                             <th scope="col"></th>
@@ -56,7 +56,7 @@
                     }
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-right"><b>Total:</b>₡ @total </td>
+                            <td colspan="4" class="text-right"><b>Sub-Total:</b>₡ @total </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -64,7 +64,6 @@
         </div>
     </section>
     @*Cargando la vista del partialview *@
-    @*TODO: LA PARTE DE LA VISTA PARCIAL Y EL CODIGO DEL CUPON*@
 <div id="resultado">
     @if (Session["Usuario"] != null)
     {
@@ -75,7 +74,7 @@
     else
     {
         <div>
-            @Html.ActionLink("Confirmar pedido", "ConfirmarPedido", new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
+            @Html.ActionLink("Confirmar pedido", "ConfirmarPedido",null, new { @class = "btn btn-success" }) <a href="@Url.Action("MuestraProductos", "Productos")" class="btn btn-primary">Volver al inicio</a>
         </div>
     }
 </div>

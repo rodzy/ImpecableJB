@@ -355,6 +355,8 @@
     <Content Include="Views\Pedido\_PedidosUsuario.cshtml" />
     <Content Include="Views\Cupones\MuestrarioCupones.cshtml" />
     <Content Include="Views\Carrito\_CarritoPedido.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EstadoPedido.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EstadoPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

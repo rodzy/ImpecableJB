@@ -55,6 +55,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult CarritoPrevia()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             return View();
         }
         /// <summary>
@@ -150,7 +154,7 @@ namespace ImpecableJB.Controllers
                 if (descuento !=0)
                 {                   
                     subtotal += (item.Producto.precio * item.Cantidad) * descuento;
-                    total += subtotal - (item.Producto.precio * item.Cantidad);
+                    total += (item.Producto.precio * item.Cantidad) - subtotal;
                 }
                 else
                 {
@@ -164,7 +168,7 @@ namespace ImpecableJB.Controllers
                 pedido.idUsuario = Convert.ToInt32(Session["Usuario"]);
                 pedido.fecha_hora = DateTime.Now;
                 pedido.total = total;
-                pedido.estado = true;
+                pedido.estado = false;
                 //Guardado en base de datos con el estado en false para que cuando se formaliza la compra se modifica a verdadero
                 Context.Pedido.Add(pedido);
                 Context.SaveChanges();
@@ -183,8 +187,9 @@ namespace ImpecableJB.Controllers
         /// una vez que el usuario se encuentre registrado y con sesión activa
         /// de lo contrario será redireccionado al inicio de sesión
         /// </summary>
+        /// <param name="id">Identificador del pedido que se está enviando</param>
         /// <returns></returns>
-        public ActionResult FormalizarCompra(Pedido pedido)
+        public ActionResult FormalizarCompra(int? id)
         {         
             //Si el usuario no está logueado no puede continuar con la formalización
             if (Session["Usuario"] == null)
@@ -193,23 +198,84 @@ namespace ImpecableJB.Controllers
             }
             else
             {
+                if (id == null)
+                {
+                    TempData["Mensaje"] = "El pedido especificado no está disponible";
+                    return View("CarritoPrevia");
+                }
+                //Encontrando el pedido para asociarlo
+                Pedido pedido = Context.Pedido.Find(id);
+                if (pedido == null)
+                {
+                    TempData["Mensaje"] = "El pedido no se encuantra reservado";
+                    return View("CarritoPrevia");
+                }
                 //Recorriendo el carrito para llenar un detalle por cada producto que se quiere registrar
                 foreach (var item in Session["Carrito"] as List<CarritoItem>)
                 {
-                    Detalle_Pedido detalle_Pedido = new Detalle_Pedido();
+                    Detalle_Pedido detalle_Pedido = new Detalle_Pedido();         
                     detalle_Pedido.idPedido = pedido.idPedido;
                     detalle_Pedido.idProducto = item.Producto.idProducto;
-                    //La dependencia de idCupones es considerablemente innecesaria para el detalle en mi opinión
-                    //detalle_Pedido.idCupones = cupones.idCupones;
                     detalle_Pedido.cantidad = item.Cantidad;
                     detalle_Pedido.descuento = Convert.ToDecimal(Session["Descuento"]);
-                    Context.Detalle_Pedido.Add(detalle_Pedido); 
+                    Context.Detalle_Pedido.Add(detalle_Pedido);
                 }
                 Context.SaveChanges();
+                //Cambiando el estado del pedido para colocarlo en procesado
+                pedido.estado = true;
+                Context.Entry(pedido).State = System.Data.Entity.EntityState.Modified;
+                Context.SaveChanges();
+                //Eliminando los elementos del carrito
+                Session.Remove("Carrito");
 
-                ViewBag.Mensaje = "Pedido realizado con éxito";
+                //Verificando las compras del usuario para la validación de rango
+                VerificandoRango();
+
+                //Mensaje de confirmación
+                TempData["Mensaje"] = "Pedido realizado con éxito, gracias por su compra!";
                 return RedirectToAction("MuestraProductos","Productos");
             }        
         }
+
+        /// <summary>
+        /// Método para verificar el rango del cliente
+        /// </summary>
+        public void VerificandoRango()
+        {
+            decimal total = 0;
+            Usuario usuario = Context.Usuario.Find(Session["Usuario"]);
+            List<Pedido> pedido = Context.Pedido.Where(x => x.idUsuario == Convert.ToInt32(Session["Usuario"])).ToList();
+            foreach(var item in pedido)
+            {
+                total += item.total;
+            }
+            if (total >= 10000 && total<= 20000)
+            {
+                usuario.idNivel = 2;
+            }
+            if(total >= 20000 && total<=20000)
+            {
+                usuario.idNivel = 3;
+            }
+            if(total >= 40000 && total <= 40000)
+            {
+                usuario.idNivel = 4;
+            }
+            if (total > 60000)
+            {
+                usuario.idNivel = 5;
+            }
+            Context.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+            Context.SaveChanges();           
+        }
+        /*//Obteniendo la lista de cupones reservados
+                    var cupones = Session["Cupones"] as List<Cupones>;
+                    //Asignación del cupón usado a la respectiva compra
+                    Cupones cup = null;
+                    //Validación para saber si existen cupones asociados al producto dispuesto
+                    if (cupones != null)
+                    {
+                        cup = cupones.Where(x => x.idProducto == item.Producto.idProducto).FirstOrDefault();
+                    }    */
     }
 }

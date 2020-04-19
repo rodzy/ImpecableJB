@@ -1,29 +1,31 @@
 ﻿@model ImpecableJB.Models.Pedido
 
     <table class="table table-condensed">
-        <thead class="thead-light">
+        <thead style="background-color:cornflowerblue; color:white">
             <tr class="cart_menu">
+                <th>
+                    @Html.DisplayNameFor(model=>model.idPedido)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fecha_hora)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Usuario)
+                    @Html.DisplayNameFor(model => model.total)<br />
+                    <small>*Incluye descuentos aplicados</small>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.total)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.estado)
+                    @Html.DisplayNameFor(model => model.estado)<br />
+                    <small>*El pedido se encontrará pendiente hasta que formalice su pago</small>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    @Html.DisplayFor(model => model.fecha_hora)
+                    @Html.DisplayFor(model => model.idPedido)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Usuario.correoElectronico)
+                    @Html.DisplayFor(model => model.fecha_hora)
                 </td>
                 <td>
                     @Html.DisplayFor(model => model.total)
@@ -37,7 +39,7 @@
             <tr>
                 <td colspan="1">
                     <div>
-                        @Html.ActionLink("Formalizar pedido", "ConfirmarPedido", null, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Formalizar pedido", "FormalizarCompra",new { id=Model.idPedido}, new { @class = "btn btn-warning" })
                     </div>
                 </td>
             </tr>

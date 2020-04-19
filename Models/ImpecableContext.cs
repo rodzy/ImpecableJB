@@ -27,11 +27,6 @@ namespace ImpecableJB.Models
                 .Property(e => e.promocion)
                 .HasPrecision(18, 0);
 
-            modelBuilder.Entity<Cupones>()
-                .HasMany(e => e.Detalle_Pedido)
-                .WithRequired(e => e.Cupones)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Nivel>()
                 .HasMany(e => e.Cupones)
                 .WithRequired(e => e.Nivel)
