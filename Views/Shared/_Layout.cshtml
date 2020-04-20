@@ -75,7 +75,7 @@
                             <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666">
                                 <img src="~/Content/Icons/account.png" style="width:30px" /> @Session["Nombre"]
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarUsuario">
+                            <div class="dropdown-menu" aria-labelledby="navbarUsuario" style="background-color: #e6f3ff">
                                 <a class="dropdown-item" href="@Url.Action("RegistroCliente", "Usuario", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                         person_add
@@ -86,10 +86,10 @@
                                         folder_shared
                                     </span> Lista de usuarios
                                 </a>
-                                <a class="dropdown-item" href="@Url.Action("PedidosUsuarios", "Pedido", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
+                                <a class="dropdown-item" href="@Url.Action("PedidosUsuario", "Pedido")" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                         style
-                                    </span> Pedidos de usuarios
+                                    </span> Buscar pedidos de usuarios
                                 </a>
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
@@ -126,13 +126,13 @@
                     @*Usuario CLIENTE autentificado*@
                         <li class="nav-item dropdown underlineHover">
                             <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666"><i class="fa fa-user fa-lg"></i> @Session["Nombre"]</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarUsuario">
+                            <div class="dropdown-menu" aria-labelledby="navbarUsuario" style="background-color: #e6f3ff">
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                         contact_mail
                                     </span> Detalles del usuario
                                 </a>
-                                <a class="dropdown-item" href="@Url.Action("PedidosUsuarios", "Pedido", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
+                                <a class="dropdown-item" href="@Url.Action("ListaPedidos", "Pedido", new { id=Session["Usuario"]})" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                         style
                                     </span> Historial de pedidos
@@ -153,7 +153,7 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" id="navbarNivel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @*href="@Url.Action("DetalleRango", "Nivel", new { idNivel = Session["Rango"] })"*@><img src="@Url.Content(Session["ImagenRango"].ToString())" style="width:40px" /></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarNivel">
+                            <div class="dropdown-menu" aria-labelledby="navbarNivel" style="background-color: #e6f3ff">
                                 <img class="dropdown-item" src="~/Content/Rangos/Sin Rango.png" style="width:20px" />
                                 <img class="dropdown-item" src="~/Content/Rangos/Bronce.png" style="width:20px" /> <h5 class="dropdown-item-text">Beneficios</h5>
                                 <img class="dropdown-item" src="~/Content/Rangos/Plata.png" style="width:20px" />

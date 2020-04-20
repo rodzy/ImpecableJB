@@ -2,11 +2,12 @@
 
 
     <table class="table">
+        <thead style="background-color:cornflowerblue; color:white;border:groove;border-color:cornflowerblue">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.fecha_hora)
             </th>
-            <th>
+            <th width="40px">
                 @Html.DisplayNameFor(model => model.Usuario.nombre)
             </th>
             <th>
@@ -17,7 +18,8 @@
             </th>
             <th></th>
         </tr>
-
+        </thead>
+        <tbody style="border:groove;border-color:#e6e6e6">
         @foreach (var item in Model)
         {
     <tr>
@@ -25,7 +27,8 @@
             @Html.DisplayFor(modelItem => item.fecha_hora)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Usuario.nombre)
+            @Html.DisplayFor(modelItem => item.Usuario.nombre) @Html.DisplayFor(modelItem=> item.Usuario.apellido1)<br />
+            (@Html.DisplayFor(modelItem=>item.Usuario.correoElectronico))
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.total)
@@ -34,9 +37,13 @@
             @Html.DisplayFor(modelItem => item.estado)
         </td>
         <td>
-            @Html.ActionLink("Detalles del pedido", "MuestraDetalle", "DetallePedido", new { id = item.idPedido })
+            <a class="btn btn-info" href="@Url.Action("MuestraDetalle","DetallePedido",new { id=item.idPedido})">
+                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                    assignment
+                </span>Detalles del pedido
+            </a>
         </td>
     </tr>
         }
-
+            </tbody>
     </table>

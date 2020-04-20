@@ -41,6 +41,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult PedidosUsuario()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             return View();
         }
 
@@ -60,7 +64,7 @@ namespace ImpecableJB.Controllers
             else
             {
                 TempData["Mensaje"] = "El correo electrónico no se encuentra registrado";
-                return View();
+                return RedirectToAction("PedidosUsuario");
             }
         }
 

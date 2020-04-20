@@ -6,13 +6,20 @@
 
 @using (Ajax.BeginForm("BuscarCorreo", "Pedido", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }))
 {
-    <h2>Buscar por correo electrónico</h2>
-    <h5>Introduzca el correo de eletrónico del usuario que desea cargar los pedidos</h5>
+    <div class="row" style="height:100px">
+                    <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
+        <div class="col-lg-9">
+            <h4 class="my-4">Buscar por correo electrónico</h4>
+            <p>Introduzca el correo de eletrónico del usuario que desea cargar los pedidos</p>
+        </div>
+    </div>
+    <hr />
     @Html.LabelFor(model => model.correoElectronico, htmlAttributes: new { @class = "control-label col-md-2" })
     <br />
-    @Html.EditorFor(model => model.correoElectronico,"correo", new { htmlAttributes = new { @class = "form-control" } })<br />
-    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })<br />
-    <input type="submit" class="btn btn-primary" value="Buscar" />
+    @Html.EditorFor(model => model.correoElectronico, "correo", new { htmlAttributes = new { @class = "form-control" } }) <input type="submit" class="btn btn-primary" value="Buscar" style="position:relative;bottom:-4px;top:-37px;right:-15px;left:300px;" />
+    @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
+    <br />
+    <hr />
 }
 <div id="resultado">
 
