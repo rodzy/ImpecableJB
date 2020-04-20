@@ -23,11 +23,22 @@ namespace ImpecableJB.Controllers
             {
                 ViewBag.Mensaje = TempData["Mensaje"].ToString();
             }
-            List<Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == Convert.ToInt32(Session["Usuario"])).ToList();
+            if (Session["Usuario"] == null)
+            {
+                TempData["Mensaje"] = "Inicie sesión para poder acceder";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            int? id = Convert.ToInt32(Session["Usuario"]);
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No tiene un identificador";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            List <Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == id).ToList();
             if (pedidos == null)
             {
-                TempData["Pedidos"] = "No tiene pedidos realizados";
-                return View();
+                TempData["Mensaje"] = "No tiene pedidos realizados";
+                return RedirectToAction("MuestraProductos", "Productos");
             }
             else
             {

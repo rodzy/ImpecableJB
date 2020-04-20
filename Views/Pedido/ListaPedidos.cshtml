@@ -1,29 +1,25 @@
 ﻿@model IEnumerable<ImpecableJB.Models.Pedido>
 
 @{
-    ViewBag.Title = "ListaPedidos";
+    ViewBag.Title = "Lista de Pedidos";
 }
 
-<h2>ListaPedidos</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-@if (TempData.ContainsKey("Pedidos"))
-{
-    <div class="alert alert-info" role="alert">
-        @TempData["Pedidos"].ToString();
+<div class="row" style="height:100px">
+    <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
+    <div class="col-lg-9">
+        <h4 class="my-4">Lista de pedido</h4>
+        <p>Tus pedidos realizados</p>
     </div>
-}
-else
-{
-    <table class="table">
+</div>
+<hr />
+<table class="table">
+    <thead style="background-color:cornflowerblue; color:white;border:groove;border-color:cornflowerblue">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Usuario.nombre)
+                @Html.DisplayNameFor(model => model.idPedido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.fecha_hora)
+                @Html.DisplayNameFor(model => model.Usuario.nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.total)
@@ -33,28 +29,33 @@ else
             </th>
             <th></th>
         </tr>
-
+    </thead>
+    <tbody style="border:groove;border-color:#e6e6e6">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Usuario.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fecha_hora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.estado)
-                </td>
-                <td>
-                    @Html.ActionLink("Detalles", "MuestraDetalle","DetallePedido", new { id = item.idPedido }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.idPedido })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.idPedido)
+                @Html.DisplayFor(modelItem => item.fecha_hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.nombre) @Html.DisplayFor(modelItem => item.Usuario.apellido1)
+                (@Html.DisplayFor(modelItem => item.Usuario.correoElectronico))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            <td>
+                <a class="btn btn-info" href="@Url.Action("MuestraDetalle","DetallePedido",new { id=item.idPedido})">
+                    <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                        assignment
+                    </span>Detalles del pedido
+                </a>
+            </td>
+        </tr>
         }
-
-    </table>
-}
+    </tbody>
+</table>

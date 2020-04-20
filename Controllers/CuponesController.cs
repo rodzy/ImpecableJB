@@ -22,6 +22,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult RegistrarCupones()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             ViewBag.idProductos = new SelectList(db.Producto, "idProducto", "nombre");
             ViewBag.idNivel = new SelectList(db.Nivel, "idNivel", "nombre");
             return View();
@@ -96,6 +100,11 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult MuestrarioCupones(int? id)
         {
+            if (Session["Usuario"] == null)
+            {
+                TempData["Mensaje"] = "Inicie sesión para poder acceder";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
             if (id == null)
             {
                 TempData["Mensaje"] = "No existe el identificador especificado";

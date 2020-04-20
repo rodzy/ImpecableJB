@@ -17,9 +17,9 @@ namespace ImpecableJB.Controllers
         // GET: Login
         public ActionResult InicioClientes()
         {
-            if (TempData.ContainsKey("Registrado"))
+            if (TempData.ContainsKey("Mensaje"))
             {
-                ViewBag.EstadoRegistro = TempData["Registrado"].ToString();
+                ViewBag.EstadoRegistro = TempData["Mensaje"].ToString();
             }
             return View();
         }
@@ -86,16 +86,17 @@ namespace ImpecableJB.Controllers
         {
             usuario.idNivel = 1;
             usuario.idRol = 2;
+            usuario.estado = true;
             if (usuario != null)
             {
                 db.Usuario.Add(usuario);
                 db.SaveChanges();
-                TempData["Registrado"] = "Usuario correctamente registrado";
+                TempData["Mensaje"] = "Usuario correctamente registrado";
                 return RedirectToAction("MuestraProductos", "Productos");
             }
             else
             {
-                TempData["Registrado"] = "Hay un problema al registrar el usuario";
+                TempData["Mensaje"] = "Hay un problema al registrar el usuario";
                 return View(usuario);
             }
         }

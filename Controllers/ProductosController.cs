@@ -24,6 +24,37 @@ namespace ImpecableJB.Controllers
             {
                 ViewBag.Mensaje = TempData["Mensaje"].ToString();
             }
+            if (Session["Compra"]!=null && Session["Compra"].Equals("Finalizado"))
+            {
+                decimal total = 0;
+                Usuario usuario = db.Usuario.Find(Session["Usuario"]);
+                List<Pedido> pedido = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario).ToList();
+
+                foreach(var item in pedido)
+                {
+                    total += item.total;
+                }
+                //Verificando las compras del usuario para la validación de rango
+                if (total >= 10000 && total <= 20000)
+                {
+                    usuario.idNivel = 2;
+                }
+                if (total >= 20000 && total <= 40000)
+                {
+                    usuario.idNivel = 3;
+                }
+                if (total >= 40000 && total <= 60000)
+                {
+                    usuario.idNivel = 4;
+                }
+                if (total > 60000)
+                {
+                    usuario.idNivel = 5;
+                }
+                db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                Session.Remove("Compra");
+            }
             return View(db.Producto.ToList());
         }
 

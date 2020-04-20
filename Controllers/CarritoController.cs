@@ -225,57 +225,16 @@ namespace ImpecableJB.Controllers
                 pedido.estado = true;
                 Context.Entry(pedido).State = System.Data.Entity.EntityState.Modified;
                 Context.SaveChanges();
+
+                //Guardando el estado de la compra
+                Session["Compra"] = "Finalizado";
                 //Eliminando los elementos del carrito
                 Session.Remove("Carrito");
-
-                //Verificando las compras del usuario para la validación de rango
-                VerificandoRango();
 
                 //Mensaje de confirmación
                 TempData["Mensaje"] = "Pedido realizado con éxito, gracias por su compra!";
                 return RedirectToAction("MuestraProductos","Productos");
             }        
         }
-
-        /// <summary>
-        /// Método para verificar el rango del cliente
-        /// </summary>
-        public void VerificandoRango()
-        {
-            decimal total = 0;
-            Usuario usuario = Context.Usuario.Find(Session["Usuario"]);
-            List<Pedido> pedido = Context.Pedido.Where(x => x.idUsuario == Convert.ToInt32(Session["Usuario"])).ToList();
-            foreach(var item in pedido)
-            {
-                total += item.total;
-            }
-            if (total >= 10000 && total<= 20000)
-            {
-                usuario.idNivel = 2;
-            }
-            if(total >= 20000 && total<=20000)
-            {
-                usuario.idNivel = 3;
-            }
-            if(total >= 40000 && total <= 40000)
-            {
-                usuario.idNivel = 4;
-            }
-            if (total > 60000)
-            {
-                usuario.idNivel = 5;
-            }
-            Context.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
-            Context.SaveChanges();           
-        }
-        /*//Obteniendo la lista de cupones reservados
-                    var cupones = Session["Cupones"] as List<Cupones>;
-                    //Asignación del cupón usado a la respectiva compra
-                    Cupones cup = null;
-                    //Validación para saber si existen cupones asociados al producto dispuesto
-                    if (cupones != null)
-                    {
-                        cup = cupones.Where(x => x.idProducto == item.Producto.idProducto).FirstOrDefault();
-                    }    */
     }
 }
