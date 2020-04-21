@@ -167,6 +167,8 @@
     <Content Include="Content\Icons\account.png" />
     <Content Include="Content\Icons\book.png" />
     <Content Include="Content\Icons\businessman.png" />
+    <Content Include="Content\Icons\ui-design.png" />
+    <Content Include="Content\Icons\website.png" />
     <Content Include="Content\LayoutMaster.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\logo-ImpecableJB.png" />

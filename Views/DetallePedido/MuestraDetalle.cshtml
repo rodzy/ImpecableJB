@@ -3,48 +3,14 @@
 @{
     ViewBag.Title = "Detalle pedido";
 }
-<style>
+@*<style>
     body {
         background: grey;
         margin-top: 120px;
         margin-bottom: 120px;
     }
-</style>
-<h2>Detalle del pedido</h2>
+</style>*@
 
-<div>
-    <h4>Información detallada para el pedido</h4>
-    <hr />
-    <dl class="dl-horizontal">
-            
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Producto.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Producto.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.cantidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.cantidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.descuento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.descuento)
-        </dd>
-
-    </dl>
-</div>
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -56,63 +22,44 @@
                         </div>
 
                         <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Número de pedido @Html.DisplayFor(model => model.Pedido.idPedido)</p>
-                            <p class="text-muted">@Html.DisplayFor(model => model.Pedido.fecha_hora)</p>
+                            <h2>Detalle del pedido</h2>
+                            <h4>Información detallada para el pedido</h4>
+                            <hr />
                         </div>
                     </div>
-
-                    <hr class="my-5">
-                    <div class="col-md-6 text-right">
-                        <p class="font-weight-bold mb-4">Payment Details</p>
-                        <p class="mb-1"><span class="text-muted">VAT: </span> 1425782</p>
-                        <p class="mb-1"><span class="text-muted">VAT ID: </span> 10253642</p>
-                        <p class="mb-1"><span class="text-muted">Payment Type: </span> Root</p>
-                        <p class="mb-1"><span class="text-muted">Name: </span> John Doe</p>
                     </div>
-                </div>
 
                 <div class="row p-5">
                     <div class="col-md-12">
                         @{ 
-                            
+                            decimal total = 0;
+                            decimal subtotal = 0;
+                            decimal descuento = 0;
                         }
                         @foreach(var item in Model)
                         {
-                            <table class="table" style="background-color:cornflowerblue; color:white">
-                                <thead>
+                            subtotal= item.Producto.precio * item.cantidad;
+                            total+= subtotal-item.descuento;
+                            descuento+= item.descuento;
+                            <table>
+                                <thead class="table" style="background-color:#99ccff; color:white">
                                     <tr>
                                         <th class="border-0 text-uppercase small font-weight-bold">Producto</th>
                                         <th class="border-0 text-uppercase small font-weight-bold"></th>
                                         <th class="border-0 text-uppercase small font-weight-bold"></th>
                                         <th class="border-0 text-uppercase small font-weight-bold"></th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Unit Cost</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Cantidad</th>
                                         <th class="border-0 text-uppercase small font-weight-bold">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>@Url.Content(item.Producto.imagen)</td>
+                                        <td><img src="@Url.Content(item.Producto.imagen)" style="width:60px"/></td>
                                         <td><b>@item.Producto.nombre</b><br /><p>@item.Producto.descripcion</p></td>
                                         <td></td>
                                         <td></td>
-                                        <td>$321</td>
-                                        <td>$3452</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Software</td>
-                                        <td>Support</td>
-                                        <td>234</td>
-                                        <td>$6356</td>
-                                        <td>$23423</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Software</td>
-                                        <td>Sofware Collection</td>
-                                        <td>4534</td>
-                                        <td>$354</td>
-                                        <td>$23434</td>
+                                        <td>@item.cantidad</td>
+                                        <td>@subtotal</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -121,31 +68,26 @@
                 </div>
 
 
-                <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                <div class="d-flex flex-row-reverse text-white p-4" style="background-color:#99ccff">
                     <div class="py-3 px-5 text-right">
                         <div class="mb-2">Total</div>
-                        <div class="h2 font-weight-light"></div>
+                        <div class="h2 font-weight-light">₡@total</div>
                     </div>
 
                     <div class="py-3 px-5 text-right">
-                        <div class="mb-2">Discount</div>
-                        <div class="h2 font-weight-light">10%</div>
+                        <div class="mb-2">Descuento</div>
+                        <div class="h2 font-weight-light">@descuento %</div>
                     </div>
 
                     <div class="py-3 px-5 text-right">
-                        <div class="mb-2">Sub - Total amount</div>
-                        <div class="h2 font-weight-light">$32,432</div>
+                        <div class="mb-2">Sub total</div>
+                        <div class="h2 font-weight-light">₡@subtotal</div>
                     </div>
                 </div>
             </div>
             </div>
         </div>
     </div>
-
-    <div class="text-light mt-5 mb-5 text-center small">by : <a class="text-light" target="_blank" href="http://totoprayogo.com">totoprayogo.com</a></div>
-
-</div>
-
 <p>
-    <a href="@Url.Action("ListaPedidos","Pedido")" class="btn btn-primary">Volver a la lista de pedidos</a>
+    <a href="@Url.Action("ListaPedidos","Pedido")" class="btn btn-primary" style="top:15px; left:15px; position:relative;">Volver a la lista de pedidos</a>
 </p>

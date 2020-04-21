@@ -58,7 +58,11 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult ListaCupones()
         {
-            return View(db.Cupones.ToList());
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
+            return View(db.Cupones.Where(x=>x.estado==true).ToList());
         }
 
         /// <summary>

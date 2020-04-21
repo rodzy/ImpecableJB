@@ -10,9 +10,9 @@
 
 <div class="form-check">
     @Html.RadioButton("", "true", variable, new { @class = "form-check-input" })
-    @Html.Label("Activo", new { @class = "form-check-label" })
+    <span class="badge badge-pill badge-success">Activo</span>
 </div>
 <div class="form-check">
     @Html.RadioButton("", "false", !variable, new { @class = "form-check-input" })
-    @Html.Label("Inactivo", new { @class = "form-check-label" })
+    <span class="badge badge-pill badge-secondary">Inactivo</span>
 </div> 

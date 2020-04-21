@@ -31,7 +31,7 @@ namespace ImpecableJB.Controllers
         [HttpPost]
         public ActionResult InicioClientes(Usuario usuario)
         {
-            Usuario user = db.Usuario.Where(x => x.correoElectronico.Equals(usuario.correoElectronico) && x.contrasena.Equals(usuario.contrasena)).FirstOrDefault();
+            Usuario user = db.Usuario.Where(x => x.correoElectronico.Equals(usuario.correoElectronico) && x.contrasena.Equals(usuario.contrasena) && x.estado==true).FirstOrDefault();
             if (user != null)
             {
                 Session["Usuario"] = user.idUsuario;
