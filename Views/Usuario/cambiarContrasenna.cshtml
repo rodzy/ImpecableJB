@@ -1,0 +1,43 @@
+﻿@model ImpecableJB.Models.Usuario
+
+@{
+    ViewBag.Title = "Cambiar contrasenna";
+}
+
+<link href="~/Content/FormComponentes.css" rel="stylesheet" />
+<center>
+    <img src="~/Content/LogoImpecable2.png" style="width:75px" /><br />
+    <h4>
+        Cambiar contraseña
+    </h4>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-group">
+    @Html.TextBox("txtNueva", null, new
+{
+@class = "fadeIn third", @type = "password",
+@name = "password",
+@id = "password-field",
+@placeholder = "Nueva contraseña",
+@data_val = "true",
+@data_val_required = "Contraseña requerida"
+})
+    <span toggle="#password-field" class="fadeIn third fa fa-fw fa-eye field-icon toggle-password underlineHover" style="color:cornflowerblue"></span>
+</div>
+        <div class="form-group">
+            @Html.TextBox("txtConfirmado", null, new
+            {
+                @class = "fadeIn third"@*, @type = "password"*@,
+@name = "password",
+@id = "password-field",
+@placeholder = "Confirmar contraseña",
+@data_val = "true",
+@data_val_required = "Contraseña requerida"
+})
+        </div>
+
+        <input type="submit" class="fadeIn fourth" value="Cambiar contraseña">
+    }
+</center>

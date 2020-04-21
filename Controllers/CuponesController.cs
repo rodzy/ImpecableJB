@@ -131,8 +131,14 @@ namespace ImpecableJB.Controllers
                 TempData["Mensaje"] = "No existe el identificador especificado";
                 return RedirectToAction("MuestrarioCupones");
             }
+            Cupones cup = db.Cupones.Find(id);
+            if (cup == null)
+            {
+                TempData["Mensaje"] = "El cupón no existe";
+                return RedirectToAction("MuestrarioCupones");
+            }
             List<Cupones> cupones = new List<Cupones>();
-            cupones.Add(db.Cupones.Find(id));
+            cupones.Add(cup);
             Session["Cupones"] = cupones;
             return View();
         }

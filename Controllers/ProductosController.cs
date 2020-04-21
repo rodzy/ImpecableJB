@@ -16,6 +16,8 @@ namespace ImpecableJB.Controllers
         // GET: Productos
         /// <summary>
         /// Método que devuelve la vista de los productos
+        /// Realiza el cálculo del nivel de usuario cada vez que se haya realizado
+        /// una compra sino no lo realiza
         /// </summary>
         /// <returns></returns>
         public ActionResult MuestraProductos()
@@ -39,18 +41,29 @@ namespace ImpecableJB.Controllers
                 {
                     usuario.idNivel = 2;
                 }
-                if (total >= 20000 && total <= 40000)
+                else
                 {
-                    usuario.idNivel = 3;
+                    if (total >= 20000 && total <= 40000)
+                    {
+                        usuario.idNivel = 3;
+                    }
+                    else
+                    {
+
+                        if (total >= 40000 && total <= 60000)
+                        {
+                            usuario.idNivel = 4;
+                        }
+                        else
+                        {
+                            if (total > 60000)
+                            {
+                                usuario.idNivel = 5;
+                            }
+                        }
+                    }
                 }
-                if (total >= 40000 && total <= 60000)
-                {
-                    usuario.idNivel = 4;
-                }
-                if (total > 60000)
-                {
-                    usuario.idNivel = 5;
-                }
+
                 db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 Session.Remove("Compra");

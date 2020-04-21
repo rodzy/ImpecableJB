@@ -71,6 +71,10 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult RegistroCliente()
         {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
             return View();
         }
         /// <summary>
@@ -87,18 +91,28 @@ namespace ImpecableJB.Controllers
             usuario.idNivel = 1;
             usuario.idRol = 2;
             usuario.estado = true;
-            if (usuario != null)
-            {
-                db.Usuario.Add(usuario);
-                db.SaveChanges();
-                TempData["Mensaje"] = "Usuario correctamente registrado";
-                return RedirectToAction("MuestraProductos", "Productos");
-            }
-            else
+            if (usuario == null)
             {
                 TempData["Mensaje"] = "Hay un problema al registrar el usuario";
                 return View(usuario);
             }
+            Usuario usuario1 = db.Usuario.Where(x => x.correoElectronico == usuario.correoElectronico).FirstOrDefault();
+            if (usuario1 != null)
+            {
+                TempData["Mensaje"] = "El correo electrónico especificado ya existe";
+                return RedirectToAction("RegistroCliente",usuario);
+            }
+            else
+            {
+                if (usuario != null)
+                {
+                    db.Usuario.Add(usuario);
+                    db.SaveChanges();
+                    TempData["Mensaje"] = "Usuario correctamente registrado";
+                    return RedirectToAction("MuestraProductos", "Productos");
+                }
+            }
+            return View();
         }
 
         /// <summary>
@@ -162,6 +176,7 @@ namespace ImpecableJB.Controllers
 
         /// <summary>
         /// Método para eliminar de manera lógica una cuenta de un usuario tipo cliente
+        /// También puede activar una cuenta
         /// </summary>
         /// <param name="id">Identificador del usuario</param>
         /// <returns></returns>
@@ -195,8 +210,17 @@ namespace ImpecableJB.Controllers
             }
             db.Entry(usuario).State = EntityState.Modified;
             db.SaveChanges();
-            TempData["Mensaje"] = "Usuario eliminado con éxito";
-            return RedirectToAction("MuestraProductos", "Producto");
+            if (Session["Rol"].ToString().Equals("Administrador"))
+            {
+                TempData["Mensaje"] = "Usuario eliminado con éxito";
+                return RedirectToAction("ListaUsuarios");
+            }
+            else
+            {
+                Session.Clear();
+                TempData["Mensaje"] = "Usuario eliminado con éxito";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
         }
 
         /// <summary>
@@ -208,6 +232,48 @@ namespace ImpecableJB.Controllers
             return View(db.Usuario.ToList());
         }
 
+        public ActionResult cambiarContrasenna(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "Debe iniciar sesión para accesar a esa función";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
+            return View();
+        }
+        /// <summary>
+        /// Método para realizar el cambio de contraseña deseada
+        /// Con validación para el campo del modelo y de la vista
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult cambiarContrasenna()
+        {
+            Usuario usuario = db.Usuario.Find(Session["Usuario"]);          
+            if (usuario == null)
+            {
+                TempData["Mensaje"] = "Debe iniciar sesión para accesar a esa función";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }          
+            string contranueva = Request["txtConfirmado"].ToString();
+            string nueva = Request["txtNueva"].ToString();
+            if (nueva.Equals(contranueva)){
+                usuario.contrasena = nueva;
+                db.Entry(usuario).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Mensaje"] = "Contraseña actualizada con éxito";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            else
+            {
+                TempData["Mensaje"] = "La contraseña no coincide";
+                return RedirectToAction("cambiarContrasenna");
+            }
+        }
 
     }
 }
