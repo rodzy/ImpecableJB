@@ -7,14 +7,15 @@
 <h3>Cupones ImplecableJB</h3>
 <p>Esta lista contiene los cupones disponibles hasta el momento se pueden registrar cupones correspondientes a rango y producto</p>
 <p>
-    @Html.ActionLink("Registrar cupones", "RegistrarCupones")
+    @Html.ActionLink("Registrar cupones", "RegistrarCupones",null,new { @class="btn btn-primary"})
 </p>
 <table class="table">
+    <thead style="background-color:cornflowerblue; color:white;border:groove;border-color:cornflowerblue">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nivel.nombre)
         </th>
-        <th>
+        <th width="100px">
             @Html.DisplayNameFor(model => model.Producto.nombre)
         </th>
         <th>
@@ -31,6 +32,8 @@
         </th>
         <th></th>
     </tr>
+</thead>
+    <tbody style="border:groove;border-color:#e6e6e6">
 
     @foreach (var item in Model)
     {
@@ -53,12 +56,24 @@
             <td>
                 @Html.DisplayFor(modelItem => item.estado)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.idCupones }) |
-                @Html.ActionLink("Details", "Details", new { id = item.idCupones }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.idCupones })
+            <td style="width:200px">
+                <a class="btn btn-primary" href="@Url.Action("AsignarUsuario","Cupones",new { id=item.idCupones})">
+                    <span class="material-icons">
+                        assignment_ind
+                    </span>
+                </a>
+                <a class="btn btn-success" href="@Url.Action("EditarCupones","Cupones",new { id=item.idCupones})">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </a>
+                <a class="btn btn-danger" href="@Url.Action("EliminarCupon","Cupones",new { id=item.idCupones})">
+                    <span class="material-icons">
+                        delete
+                    </span>
+                </a>
             </td>
         </tr>
     }
-
+        </tbody>
 </table>

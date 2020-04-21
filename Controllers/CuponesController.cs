@@ -146,5 +146,113 @@ namespace ImpecableJB.Controllers
             Session["Cupones"] = cupones;
             return View();
         }
+        
+        /// <summary>
+        /// Método para editar el cupón seleccionado de la lista
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditarCupones(int? id)
+        {
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No existe el identificador especificado";
+                return RedirectToAction("ListaCupones");
+            }
+            Cupones cup = db.Cupones.Find(id);
+            if (cup == null)
+            {
+                TempData["Mensaje"] = "El cupón no existe";
+                return RedirectToAction("ListaCupones");
+            }
+            ViewBag.idProducto = new SelectList(db.Producto, "idProducto", "nombre", cup.idProducto);
+            ViewBag.idNivel = new SelectList(db.Nivel, "idNivel", "nombre", cup.idNivel);
+            return View(cup);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cupones"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditarCupones(Cupones cupones)
+        {
+            if (cupones == null)
+            {
+                TempData["Mensaje"] = "No existe el identificador especificado";
+                return RedirectToAction("ListaCupones");
+            }
+            db.Entry(cupones).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            TempData["Mensaje"] = "Cupón modificado con éxito";
+            return RedirectToAction("ListaCupones");
+        }
+
+        /// <summary>
+        /// Método para cargar la vista con los datos del cupón 
+        /// para asignar al usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult AsignarUsuario(int? id)
+        {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
+            if (id == null)
+            {
+                TempData["Mensaje"] = "No existe el identificador especificado";
+                return RedirectToAction("ListaCupones");
+            }
+            Cupones cupones = db.Cupones.Find(id);
+            Session["idCupon"] = id;
+            if (cupones == null)
+            {
+                TempData["Mensaje"] = "El cupón no existe";
+                return RedirectToAction("ListaCupones");
+            }
+            return View(cupones);
+        }
+        /// <summary>
+        /// Método para asignar los cupones al usuario por correo electrónico
+        /// y retornar con mensaje de éxito si hizo la relación con el usuario
+        /// sino un mensaje de error que puede darse en caso de que la relación ya exista
+        /// con esto evitamos los cupones duplicados para los usuarios
+        /// </summary>
+        /// <param name="cupones"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AsignarUsuario()
+        {
+            string correo = Request["txtCorreo"].ToString();
+            Cupones cupones = db.Cupones.Find(Session["idCupon"]);
+            Usuario usuario = db.Usuario.Where(x => x.correoElectronico == correo && x.idNivel == cupones.idNivel).FirstOrDefault();
+            if (usuario == null)
+            {
+                TempData["Mensaje"] = "El usuario especificado no cumple con los requisitos";
+                return RedirectToAction("AsignarUsuario", new { id = cupones.idCupones });
+            }
+            else
+            {
+                Cupones_Usuario cupones_Usuario = new Cupones_Usuario();
+                cupones_Usuario.idCupones = cupones.idCupones;
+                cupones_Usuario.idUsuario = usuario.idUsuario;
+                cupones_Usuario.estado = true;
+                    try
+                    {
+                        db.Cupones_Usuarios.Add(cupones_Usuario);
+                        db.SaveChanges();
+                        TempData["Mensaje"] = "Cupón asignado a usuario con éxito";
+                        return RedirectToAction("ListaCupones");
+                    }
+                    catch
+                    {
+                        TempData["Mensaje"] = "El cupón seleccionado ya se encuentra asignado al usuario";
+                        return RedirectToAction("ListaCupones");
+                    }
+                } 
+        }
     }
 }

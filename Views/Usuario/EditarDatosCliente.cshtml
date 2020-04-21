@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Guardar" class="btn btn-success" />
-                                <a href="@Url.Action("DetallesUsuario","Usuario")" class="btn btn-primary">Volver a detalles</a>
+                                <a href="@Url.Action("DetallesUsuario","Usuario",new { id=Session["Usuario"]})" class="btn btn-primary">Volver a detalles</a>
                             </div>
                         </div>
                     </div>

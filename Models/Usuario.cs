@@ -13,6 +13,7 @@ namespace ImpecableJB.Models
         public Usuario()
         {
             Pedido = new HashSet<Pedido>();
+            Cupones_Usuarios = new HashSet<Cupones_Usuario>();
         }
 
         [Key]
@@ -60,5 +61,7 @@ namespace ImpecableJB.Models
 
         [Display(Name ="Tipo de usuario")]
         public virtual Rol Rol { get; set; }
+
+        public virtual ICollection<Cupones_Usuario> Cupones_Usuarios { get; set; }
     }
 }

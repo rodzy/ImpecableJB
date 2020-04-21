@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\Cupones.cs" />
+    <Compile Include="Models\Cupones_Usuario.cs" />
     <Compile Include="Models\Detalle_Pedido.cs" />
     <Compile Include="Models\ImpecableContext.cs" />
     <Compile Include="Models\Nivel.cs" />
@@ -361,6 +362,10 @@
     <Content Include="Views\Shared\DisplayTemplates\EstadoPedido.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EstadoPedido.cshtml" />
     <Content Include="Views\Usuario\cambiarContrasenna.cshtml" />
+    <Content Include="Views\Cupones\AsignarUsuario.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EstadoCupon.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EstadoCupon.cshtml" />
+    <Content Include="Views\Cupones\EditarCupones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

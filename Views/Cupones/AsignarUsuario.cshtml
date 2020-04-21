@@ -1,0 +1,35 @@
+﻿@model ImpecableJB.Models.Cupones
+
+@{
+    ViewBag.Title = "Asignar cupones";
+}
+    <link href="~/Content/FormComponentes.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    <div class="row" style="height:100px">
+        <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
+        <div class="col-lg-9">
+            <h4 class="my-4">Asignar cupón por correo electrónico</h4>
+            <p>Introduzca el correo de electrónico del usuario para agregar este cupón a su nombre</p>
+        </div>
+    </div>
+    <center>
+    <hr />
+    @Html.Label("Correo electrónico", htmlAttributes: new { @class = "control-label col-md-2" })
+    <br />
+    @Html.TextBox("txtCorreo", null, new
+{
+@class = "fadeIn third",
+       @type = "text",
+@placeholder = "impecable@services.com",
+@data_val = "true",
+@data_val_required = "Correo requerido"
+})
+    <input type="submit" class="btn btn-primary" value="Asignar cupón" style="top:16px !important; position:relative; left:-16px !important; " />
+    <p>
+        <b>Para usuarios de nivel:</b><br />
+                @Html.DisplayFor(model => model.Nivel.nombre) <img src="@Url.Content("~/Content/Rangos/"+Model.Nivel.nombre+".png")" style="width:40px"/>
+    </p>
+    <hr />
+        </center>
+}

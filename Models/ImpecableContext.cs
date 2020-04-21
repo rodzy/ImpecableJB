@@ -13,6 +13,7 @@ namespace ImpecableJB.Models
         }
 
         public virtual DbSet<Cupones> Cupones { get; set; }
+        public virtual DbSet<Cupones_Usuario> Cupones_Usuarios { get; set; }
         public virtual DbSet<Detalle_Pedido> Detalle_Pedido { get; set; }
         public virtual DbSet<Nivel> Nivel { get; set; }
         public virtual DbSet<Pedido> Pedido { get; set; }
@@ -26,6 +27,16 @@ namespace ImpecableJB.Models
             modelBuilder.Entity<Cupones>()
                 .Property(e => e.promocion)
                 .HasPrecision(18, 0);
+
+            modelBuilder.Entity<Cupones_Usuario>()
+                .HasRequired(e => e.Cupones)
+                .WithMany(e => e.Cupones_Usuarios)
+                .HasForeignKey(e => e.idCupones);
+
+            modelBuilder.Entity<Cupones_Usuario>()
+                .HasRequired(e => e.Usuario)
+                .WithMany(e => e.Cupones_Usuarios)
+                .HasForeignKey(e => e.idUsuario);
 
             modelBuilder.Entity<Nivel>()
                 .HasMany(e => e.Cupones)

@@ -17,26 +17,29 @@
 <div class="form-group">
     @Html.TextBox("txtNueva", null, new
 {
-@class = "fadeIn third", @type = "password",
+@class = "fadeIn third",
+        @type = "password",
 @name = "password",
 @id = "password-field",
 @placeholder = "Nueva contraseña",
 @data_val = "true",
 @data_val_required = "Contraseña requerida"
 })
+
     <span toggle="#password-field" class="fadeIn third fa fa-fw fa-eye field-icon toggle-password underlineHover" style="color:cornflowerblue"></span>
+
 </div>
-        <div class="form-group">
-            @Html.TextBox("txtConfirmado", null, new
-            {
-                @class = "fadeIn third"@*, @type = "password"*@,
+<div class="form-group">
+    @Html.TextBox("txtConfirmado", null, new
+    {
+        @class = "fadeIn third"@*, @type = "password"*@,
 @name = "password",
 @id = "password-field",
 @placeholder = "Confirmar contraseña",
 @data_val = "true",
 @data_val_required = "Contraseña requerida"
 })
-        </div>
+</div>
 
         <input type="submit" class="fadeIn fourth" value="Cambiar contraseña">
     }

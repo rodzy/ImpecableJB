@@ -258,9 +258,11 @@ namespace ImpecableJB.Controllers
             {
                 TempData["Mensaje"] = "Debe iniciar sesión para accesar a esa función";
                 return RedirectToAction("MuestraProductos", "Productos");
-            }          
+            }
+            //Ambos campos de la vista
             string contranueva = Request["txtConfirmado"].ToString();
             string nueva = Request["txtNueva"].ToString();
+            //Validación y ejecución de la actualización
             if (nueva.Equals(contranueva)){
                 usuario.contrasena = nueva;
                 db.Entry(usuario).State = EntityState.Modified;
