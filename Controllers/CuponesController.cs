@@ -130,7 +130,6 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult CanjearCupon(int? id)
         {
-            List<Cupones> cupones = new List<Cupones>();
             
             if (id == null)
             {
@@ -151,21 +150,42 @@ namespace ImpecableJB.Controllers
             }
             else
             {
-                //Recorriendo el carrito
                 foreach (var item in Session["Carrito"] as List<CarritoItem>)
                 {
-                    //Añadiendo los cupones a la lista para poder aplicar los descuentos
-                    if (item.Producto.idProducto.Equals(cup.idProducto))
+                    if (Session["Cupones"] != null)
                     {
-                        cupones.Add(cup);
-                        Session["Cupones"] = cupones;
-                        TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
+                        List<Cupones> cupones = (List<Cupones>)Session["Cupones"];
+                        int index = cupones.FindIndex(x=>x.idProducto==cup.idProducto);
+                        //Añadiendo los cupones a la lista para poder aplicar los descuentos
+                        if (item.Producto.idProducto.Equals(cup.idProducto) && index!=0)
+                        {                         
+                            cupones.Add(cup);
+                            Session["Cupones"] = cupones;
+                            TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
+                            return RedirectToAction("CarritoPrevia", "Carrito");
+                        }
+                        else
+                        {
+                            TempData["Mensaje"] = "Actualmente los artículos en el carrito, no son elegibles para aplicar descuentos";
+                        }
                     }
                     else
                     {
-                        TempData["Mensaje"] = "Actualmente los artículos en el carrito, no son elegibles para aplicar descuentos";
+                        if (item.Producto.idProducto.Equals(cup.idProducto))
+                        {
+                            List<Cupones> cupones = new List<Cupones>();
+                            cupones.Add(cup);
+                            Session["Cupones"] = cupones;
+                            TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
+                            return RedirectToAction("CarritoPrevia", "Carrito");
+                        }
+                        else
+                        {
+                            TempData["Mensaje"] = "Actualmente los artículos en el carrito, no son elegibles para aplicar descuentos";
+                        }
+
                     }
-                }               
+                }
                 return RedirectToAction("CarritoPrevia","Carrito");
             }
 

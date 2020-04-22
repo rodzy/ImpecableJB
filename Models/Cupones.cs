@@ -31,6 +31,7 @@ namespace ImpecableJB.Models
 
         [Required(ErrorMessage ="La descripción del cupón es requerida")]
         [Display(Name="Descripción")]
+        [DataType(DataType.MultilineText)]
         public string descripcion { get; set; }
 
         [Display(Name ="Promoción")]

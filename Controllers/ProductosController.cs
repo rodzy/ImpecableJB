@@ -30,7 +30,7 @@ namespace ImpecableJB.Controllers
             {
                 decimal total = 0;
                 Usuario usuario = db.Usuario.Find(Session["Usuario"]);
-                List<Pedido> pedido = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario).ToList();
+                List<Pedido> pedido = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario && x.estado==true).ToList();
 
                 foreach(var item in pedido)
                 {

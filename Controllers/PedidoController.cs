@@ -34,7 +34,7 @@ namespace ImpecableJB.Controllers
                 TempData["Mensaje"] = "No tiene un identificador";
                 return RedirectToAction("MuestraProductos", "Productos");
             }
-            List <Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == id).ToList();
+            List <Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == id && x.estado==true).ToList();
             if (pedidos == null)
             {
                 TempData["Mensaje"] = "No tiene pedidos realizados";
@@ -66,10 +66,14 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult BuscarCorreo(Usuario us)
         {
+            if (!Session["Rol"].Equals("Administrador"))
+            {
+                return RedirectToAction("MuestraProductos");
+            }
             Usuario usuario = db.Usuario.Where(x => x.correoElectronico.Equals(us.correoElectronico)).FirstOrDefault();
             if (usuario != null)
             {
-                List<Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario).ToList();
+                List<Pedido> pedidos = db.Pedido.Where(x => x.idUsuario == usuario.idUsuario && usuario.estado==true).ToList();
                 return PartialView("_PedidosUsuario", pedidos);
             }
             else

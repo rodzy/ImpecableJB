@@ -49,7 +49,7 @@
                             @foreach (var item in Model)
                             {
                                 total += (item.Producto.precio * item.cantidad);
-                                descuento +=Convert.ToInt32(item.descuento * 100);
+                                descuento = Convert.ToInt32(item.descuento * 100);
                                 <tbody>
                                     <tr>
                                         <td><img src="@Url.Content(item.Producto.imagen)" style="width:60px" /></td>
@@ -73,6 +73,3 @@
             </div>
             </div>
         </div>
-<p>
-    <a href="@Url.Action("PedidosUsuario","Pedido")" class="btn btn-primary" style="top:15px; left:15px; position:relative;">Volver a la lista de pedidos</a>
-</p>

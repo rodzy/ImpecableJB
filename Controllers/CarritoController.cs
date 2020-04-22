@@ -149,8 +149,14 @@ namespace ImpecableJB.Controllers
             //Recorrer el carrito de compras con todos los items
             foreach(var item in Session["Carrito"] as List<CarritoItem>)
             {
+                int index = -1;
+                if (Session["Cupones"] != null)
+                {
+                    List<Cupones> cupones = (List<Cupones>)Session["Cupones"];
+                    index = cupones.FindIndex(x => x.idProducto == item.Producto.idProducto);
+                }
                 //Total en compras con descuentos aplicados si es que tiene descuentos
-                if (descuento !=0)
+                if (descuento !=0 && index==0)
                 {                   
                     subtotal += (item.Producto.precio * item.Cantidad) * descuento;
                     total += (item.Producto.precio * item.Cantidad) - subtotal;
