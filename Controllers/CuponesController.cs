@@ -117,7 +117,7 @@ namespace ImpecableJB.Controllers
             Usuario usuario = db.Usuario.Find(id);
             if (usuario != null)
             {
-                List<Cupones> cupones = db.Cupones.Where(x => x.idNivel == usuario.idNivel).ToList();
+                List<Cupones> cupones = db.Cupones.Where(x => x.estado == true).ToList();
                 return View(cupones);
             }
             return View();
@@ -130,6 +130,8 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult CanjearCupon(int? id)
         {
+            List<Cupones> cupones = new List<Cupones>();
+            
             if (id == null)
             {
                 TempData["Mensaje"] = "No existe el identificador especificado";
@@ -141,12 +143,49 @@ namespace ImpecableJB.Controllers
                 TempData["Mensaje"] = "El cupón no existe";
                 return RedirectToAction("MuestrarioCupones");
             }
-            List<Cupones> cupones = new List<Cupones>();
-            cupones.Add(cup);
-            Session["Cupones"] = cupones;
-            return View();
+            //Verificar que se tengan elementos en el carrito para la poder utilizar cupones
+            if (Session["Carrito"] == null)
+            {
+                TempData["Mensaje"] = "Para utilizar cupones debe tener articulos elegidos en el carrito";
+                return RedirectToAction("MuestraProductos", "Productos");
+            }
+            else
+            {
+                //Recorriendo el carrito
+                foreach (var item in Session["Carrito"] as List<CarritoItem>)
+                {
+                    //Añadiendo los cupones a la lista para poder aplicar los descuentos
+                    if (item.Producto.idProducto.Equals(cup.idProducto))
+                    {
+                        cupones.Add(cup);
+                        Session["Cupones"] = cupones;                        
+                    }
+                }
+                TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
+                return RedirectToAction("CarritoPrevia","Carrito");
+            }
+
         }
-        
+
+        /// <summary>
+        /// Método que se apoya de los Ajax helpers para filtrar los cupones
+        /// Dependiendo 1=Cupones disponibles / 2=Cupones gastados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult FiltrarCupones(int? id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return PartialView("_CuponesDisponibles", db.Cupones_Usuarios.Where(x=>x.estado==true).ToList());
+                case 2:
+                    return PartialView("_CuponesGastados", db.Cupones_Usuarios.Where(x => x.estado == false).ToList());
+                default:
+                    return View();
+            }
+        }
+
         /// <summary>
         /// Método para editar el cupón seleccionado de la lista
         /// </summary>

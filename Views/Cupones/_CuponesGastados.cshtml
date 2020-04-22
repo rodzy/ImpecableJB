@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ImpecableJB.Models.Cupones_Usuario>
+
+@foreach (var item in @Model)
+{
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100" style="background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);">
+            <img class="card-img-top" src="@Url.Content(item.Cupones.Producto.imagen)">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Cupones.titulo)
+                </h5>
+                <p class="card-text" style="text-align:justify center">
+                    <div class="collapse multi-collapse" id="leermas_@item.idCupones">
+                        @Html.DisplayFor(model => item.Cupones.descripcion)<br />
+                        <small><b>@Html.LabelFor(model => item.Cupones.idNivel): </b>@Html.DisplayFor(model => item.Cupones.Nivel.nombre)</small><br />
+                        @Html.DisplayFor(modelItem => item.estado)
+                    </div>
+                </p>
+            </div>
+            <div class="card-footer">
+                <center><h5>@Html.DisplayFor(modelItem => item.Cupones.promocion)</h5></center>
+                <a id="leer" class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" data-toggle="collapse" href="#leermas_@item.idCupones" aria-expanded="false" aria-controls="colapsableleer">
+                    <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                        card_membership
+                    </span> Detalles del cupón
+                </a>
+            </div>
+        </div>
+    </div>
+}

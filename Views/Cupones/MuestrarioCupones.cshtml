@@ -1,27 +1,37 @@
 ﻿@model IEnumerable<ImpecableJB.Models.Cupones>
 
 @{
-    ViewBag.Title = "Muestrario Cupones";
+    ViewBag.Title = "Muestrario de cupones";
 }
+    <style>
+        .colorchange:hover {
+            color: #003366;
+        }
 
-    <div class="row">
-        <div class="col-lg-3">
-            <img src="~/Content/LogoImpecable2.png" />
-        </div>
-        <div class="col-lg-7">
-            <h2>Muestrario de Cupones</h2>
-            <p>
-                A continuación se presentan los cupones disponibles, los cupones que tiene accesibles aparecerán con
-                <b>Clasificación</b>
-            </p>
-            <hr />
-            <h3>Productos con promoción</h3>
-        </div>
-        <div class="col-lg-2">
-            <img src="@Url.Content(Session["ImagenRango"].ToString())" style="width:50px" />
-        </div>
+        .colorchang:hover {
+            color: #ffff;
+        }
+    </style>
+<div class="row">
+    <div class="col-lg-3">
+        <img src="~/Content/LogoImpecable2.png" />
     </div>
-        <div class="row">
+    <!-- /.col-lg-3 -->
+    <div class="col-lg-9">
+        <h3 class="my-4">Muestrario de Cupones</h3>
+        <p>
+            A continuación se presentan los cupones disponibles, los cupones que tiene accesibles aparecerán con
+        </p>
+        <hr />
+        <div class="list-group">
+            @Html.ActionLink("Todos los cupones", "MuestrarioCupones", "Cupones", new { id = Session["Usuario"] }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })
+            @Ajax.ActionLink("Mis cupones disponibles", "FiltrarCupones", new { id = 1 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })
+            @Ajax.ActionLink("Mis cupones usados", "FiltrarCupones", new { id = 2 }, new AjaxOptions { UpdateTargetId = "resultado", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "list-group-item list-group-item-action colorchang", @style = "background-color: #e6f3ff" })          
+        </div>
+        <hr />
+        <br /><br />
+    </div>
+    <div class="row" id="resultado">
             @foreach (var item in @Model)
             {
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -46,15 +56,9 @@
                                     card_membership
                                 </span> Detalles del cupón
                             </a>
-                            <a class="btn btn-block btn-outline-light colorchange" style="background-color:#8fc3dd" href="@Url.Action("CanjearCupon","Carrito",new { id=item.idCupones})">
-                                <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
-                                    loyalty
-                                </span> Canjear cupón
-                            </a>
-
                         </div>
                     </div>
                 </div>
             }
         </div>
-        
+    </div>

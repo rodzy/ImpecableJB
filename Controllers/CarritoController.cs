@@ -150,7 +150,6 @@ namespace ImpecableJB.Controllers
             foreach(var item in Session["Carrito"] as List<CarritoItem>)
             {
                 //Total en compras con descuentos aplicados si es que tiene descuentos
-                //CONSULTAR CON LA PROFE: Si el descuento lo realizo por cada producto o es asignado al total
                 if (descuento !=0)
                 {                   
                     subtotal += (item.Producto.precio * item.Cantidad) * descuento;
@@ -225,6 +224,18 @@ namespace ImpecableJB.Controllers
                 pedido.estado = true;
                 Context.Entry(pedido).State = System.Data.Entity.EntityState.Modified;
                 Context.SaveChanges();
+
+                //Marcando como usado el cupón utilizado en la compra
+                if (Session["Cupones"] != null)
+                {
+                    foreach (var item in Session["Cupones"] as List<Cupones>)
+                    {
+                        Cupones_Usuario cupones_Usuario = Context.Cupones_Usuarios.Find(item.idCupones,Session["Usuario"]);
+                        cupones_Usuario.estado = false;
+                        Context.Entry(cupones_Usuario).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    Context.SaveChanges();
+                }
 
                 //Guardando el estado de la compra
                 Session["Compra"] = "Finalizado";

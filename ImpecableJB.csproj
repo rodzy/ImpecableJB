@@ -366,6 +366,8 @@
     <Content Include="Views\Shared\DisplayTemplates\EstadoCupon.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EstadoCupon.cshtml" />
     <Content Include="Views\Cupones\EditarCupones.cshtml" />
+    <Content Include="Views\Cupones\_CuponesDisponibles.cshtml" />
+    <Content Include="Views\Cupones\_CuponesGastados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
