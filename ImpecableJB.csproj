@@ -368,6 +368,8 @@
     <Content Include="Views\Cupones\EditarCupones.cshtml" />
     <Content Include="Views\Cupones\_CuponesDisponibles.cshtml" />
     <Content Include="Views\Cupones\_CuponesGastados.cshtml" />
+    <Content Include="Views\Cupones\BuscarCupones.cshtml" />
+    <Content Include="Views\Cupones\_BuscarCupones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

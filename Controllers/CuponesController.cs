@@ -158,10 +158,14 @@ namespace ImpecableJB.Controllers
                     if (item.Producto.idProducto.Equals(cup.idProducto))
                     {
                         cupones.Add(cup);
-                        Session["Cupones"] = cupones;                        
+                        Session["Cupones"] = cupones;
+                        TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
                     }
-                }
-                TempData["Mensaje"] = "Cupón agregado con éxito, el descuento se verá reflejado en el total del pedido";
+                    else
+                    {
+                        TempData["Mensaje"] = "Actualmente los artículos en el carrito, no son elegibles para aplicar descuentos";
+                    }
+                }               
                 return RedirectToAction("CarritoPrevia","Carrito");
             }
 
@@ -175,12 +179,13 @@ namespace ImpecableJB.Controllers
         /// <returns></returns>
         public ActionResult FiltrarCupones(int? id)
         {
+            int idU = Convert.ToInt32(Session["Usuario"]);
             switch (id)
             {
                 case 1:
                     return PartialView("_CuponesDisponibles", db.Cupones_Usuarios.Where(x=>x.estado==true).ToList());
                 case 2:
-                    return PartialView("_CuponesGastados", db.Cupones_Usuarios.Where(x => x.estado == false).ToList());
+                    return PartialView("_CuponesGastados", db.Cupones_Usuarios.Where(x => x.estado == false && x.idUsuario==idU).ToList());
                 default:
                     return View();
             }
@@ -292,6 +297,39 @@ namespace ImpecableJB.Controllers
                         return RedirectToAction("ListaCupones");
                     }
                 } 
+        }
+
+        /// <summary>
+        /// Carga la vista de buscar los cupones
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BuscarCupones()
+        {
+            if (TempData.ContainsKey("Mensaje"))
+            {
+                ViewBag.Mensaje = TempData["Mensaje"].ToString();
+            }
+            return View();
+        }
+        /// <summary>
+        /// Puede buscar el usuario cliente por su correo
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult BuscarCupones(Usuario usuario)
+        {
+            Usuario usuario1 = db.Usuario.Where(x => x.correoElectronico.Equals(usuario.correoElectronico)).FirstOrDefault();
+            if (usuario1 != null)
+            {
+                List<Cupones_Usuario> cupones = db.Cupones_Usuarios.Where(x => x.idUsuario == usuario1.idUsuario).ToList();
+                return PartialView("_BuscarCupones", cupones);
+            }
+            else
+            {
+                TempData["Mensaje"] = "No se encuentra el usuario especificado";
+                return View();
+            }
         }
     }
 }

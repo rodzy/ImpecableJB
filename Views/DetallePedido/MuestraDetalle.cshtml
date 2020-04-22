@@ -33,61 +33,46 @@
                     <div class="col-md-12">
                         @{ 
                             decimal total = 0;
-                            decimal subtotal = 0;
-                            decimal descuento = 0;
+                            int descuento = 0;
                         }
-                        @foreach(var item in Model)
-                        {
-                            subtotal= item.Producto.precio * item.cantidad;
-                            total+= subtotal-item.descuento;
-                            descuento+= item.descuento;
-                            <table>
-                                <thead class="table" style="background-color:#99ccff; color:white">
-                                    <tr>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Producto</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold"></th>
-                                        <th class="border-0 text-uppercase small font-weight-bold"></th>
-                                        <th class="border-0 text-uppercase small font-weight-bold"></th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Cantidad</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Total</th>
-                                    </tr>
-                                </thead>
+                        <table>
+                            <thead class="table" style="background-color:#99ccff; color:white">
+                                <tr>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Producto</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold"></th>
+                                    <th class="border-0 text-uppercase small font-weight-bold"></th>
+                                    <th class="border-0 text-uppercase small font-weight-bold"></th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Cantidad</th>
+                                    <th class="border-0 text-uppercase small font-weight-bold">Total</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                total += (item.Producto.precio * item.cantidad);
+                                descuento +=Convert.ToInt32(item.descuento * 100);
                                 <tbody>
                                     <tr>
-                                        <td><img src="@Url.Content(item.Producto.imagen)" style="width:60px"/></td>
+                                        <td><img src="@Url.Content(item.Producto.imagen)" style="width:60px" /></td>
                                         <td><b>@item.Producto.nombre</b><br /><p>@item.Producto.descripcion</p></td>
                                         <td></td>
                                         <td></td>
                                         <td>@item.cantidad</td>
-                                        <td>@subtotal</td>
+                                        <td>@total</td>
                                     </tr>
                                 </tbody>
+                            }
                             </table>
-                        }
-                    </div>
+                      </div>
                 </div>
 
-
-                <div class="d-flex flex-row-reverse text-white p-4" style="background-color:#99ccff">
                     <div class="py-3 px-5 text-right">
-                        <div class="mb-2">Total</div>
-                        <div class="h2 font-weight-light">₡@total</div>
-                    </div>
-
-                    <div class="py-3 px-5 text-right">
-                        <div class="mb-2">Descuento</div>
+                        <div class="mb-2">Valor del descuento</div>
                         <div class="h2 font-weight-light">@descuento %</div>
-                    </div>
-
-                    <div class="py-3 px-5 text-right">
-                        <div class="mb-2">Sub total</div>
-                        <div class="h2 font-weight-light">₡@subtotal</div>
                     </div>
                 </div>
             </div>
             </div>
         </div>
-    </div>
 <p>
-    <a href="@Url.Action("ListaPedidos","Pedido")" class="btn btn-primary" style="top:15px; left:15px; position:relative;">Volver a la lista de pedidos</a>
+    <a href="@Url.Action("PedidosUsuario","Pedido")" class="btn btn-primary" style="top:15px; left:15px; position:relative;">Volver a la lista de pedidos</a>
 </p>

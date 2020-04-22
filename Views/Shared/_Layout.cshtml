@@ -120,15 +120,21 @@
                                         menu_book
                                     </span> Listado de cupones
                                 </a>
+                                <a class="dropdown-item" href="@Url.Action("BuscarCupones", "Cupones")" style="font-size: large; color: #666666 ">
+                                    <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
+                                        pageview
+                                    </span> Buscar cupones por usuario
+                                </a>
                             </div>
                         </li>
                     }
                     else
                     {
-                    @*Usuario CLIENTE autentificado*@
+                        @*Usuario CLIENTE autentificado*@
                         <li class="nav-item dropdown underlineHover">
                             <a class="nav-link dropdown-toggle active" id="navbarUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:large;color:#666666">
-                            <img src="~/Content/Icons/account.png" style="width:30px" />  @Session["Nombre"]</a>
+                                <img src="~/Content/Icons/account.png" style="width:30px" />  @Session["Nombre"]
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarUsuario" style="background-color: #e6f3ff">
                                 <a class="dropdown-item" href="@Url.Action("DetallesUsuario", "Usuario",new { id= Session["Usuario"] })" style="font-size: large; color: #666666 ">
                                     <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
@@ -151,7 +157,12 @@
                             <a class="nav-link active" href="@Url.Action("MuestrarioCupones","Cupones",new { id=Session["Usuario"]})" style="font-size:large;color:#666666">
                                 <span class="material-icons" style="vertical-align:middle;display:inline-flex ">
                                     menu_book
-                                </span> Cupones disponibles
+                                </span> Cupones
+                            </a>
+                        </li>
+                        <li class="nav-item underlineHover">
+                            <a class="nav-link" href="@Url.Action("CarritoPrevia", "Carrito")" style="font-size:large;color:#666666">
+                                <img src="@Url.Content(Session["ImagenRango"].ToString())" class="img-fluid" style="width:40px" />
                             </a>
                         </li>
 
@@ -223,9 +234,7 @@
             © 2020 Programación en Ambiente Web II | <a href="">Proyecto ISW-711</a>
 
             <div class="information">
-                <a href="">Informacion del desarrollador web</a>
-                | <a href="">Privacion y Politica</a> |
-                <a href="">Terminos y Condiciones</a>
+                <a href="https://github.com/rodzy">Informacion del desarrollador web</a>           
             </div>
         </div>
     </footer>

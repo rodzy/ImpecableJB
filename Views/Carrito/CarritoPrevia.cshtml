@@ -3,9 +3,15 @@
     ViewBag.Title = "CarritoPrevia";
 }
 <link rel="stylesheet" href="~/Content/Carrito.css" />
-
-<h4>ImpecableJB - Carrito de compras</h4>
-<p>Desde el carrito de compras podrá monitorear sus con</p>
+<div class="row">
+    <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
+    <div class="col-lg-9">
+        <h4>ImpecableJB - Carrito de compras</h4>
+        <p>Desde el carrito de compras podrá monitorear sus pedidos a realizar, cuando esté seguro de su compra puede confirmarla sin problema.</p>
+        <p>Si desea ver la disponibilidad de cupones y utilizarlos en su compra puede hacer <b><a href="@Url.Action("MuestrarioCupones","Cupones",new { id=Session["Usuario"]})">click aquí</a></b></p>
+    </div>
+</div>
+<hr />
 <br />
 @if (Session["Carrito"] != null)
 {

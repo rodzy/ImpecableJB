@@ -41,11 +41,11 @@ namespace ImpecableJB.Controllers
                 //Session["ListaRangos"] = db.Nivel.ToList();
                 if (user.Rol.descripcion.Equals("Administrador"))
                 {
-                    Session["Nombre"] = "Bienvenido,"+ user.nombre + "(" + user.Rol.descripcion + ")";                  
+                    Session["Nombre"] = "Bienvenido "+ user.nombre + "(" + user.Rol.descripcion + ")";                  
                 }
                 else
                 {
-                    Session["Nombre"] = "Bienvenido," + user.nombre;
+                    Session["Nombre"] = "Bienvenido " + user.nombre;
                 }
                 return RedirectToAction("MuestraProductos","Productos");
             }

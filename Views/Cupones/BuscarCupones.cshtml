@@ -1,7 +1,7 @@
 ﻿@model ImpecableJB.Models.Usuario
 
 @{
-    ViewBag.Title = "Buscar pedidos por correo";
+    ViewBag.Title = "Buscar cupones por correo";
 }
 <style>
     input[type=button], input[type=submit], input[type=reset] {
@@ -61,22 +61,22 @@
         }
 </style>
 
-@using (Ajax.BeginForm("BuscarCorreo", "Pedido", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }))
+@using (Ajax.BeginForm("BuscarCupones", "Cupones", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultado" }))
 {
     <div class="row" style="height:100px">
         <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
         <div class="col-lg-9">
-            <h4 class="my-4">Buscar por correo electrónico</h4>
-            <p>Introduzca el correo de electrónico del usuario que desea cargar los pedidos</p>
+            <h4 class="my-4">Buscar por cupones correo electrónico</h4>
+            <p>Introduzca el correo de electrónico del usuario que desea para cargar el control de cupones asignados</p>
         </div>
     </div>
     <center>
         <hr />
         @Html.LabelFor(model => model.correoElectronico, htmlAttributes: new { @class = "control-label col-md-2" })
         <br />
-        @Html.EditorFor(model => model.correoElectronico, "correo", new{ htmlAttributes = new {@class = "fadeIn third",@type = "text", @placeholder = "impecable@services.com" } })<br />
+        @Html.EditorFor(model => model.correoElectronico, "correo", new { htmlAttributes = new { @class = "fadeIn third", @type = "text", @placeholder = "impecable@services.com" } })<br />
         @Html.ValidationMessageFor(model => model.correoElectronico, "", new { @class = "text-danger" })
-   <br /><input type="submit" class="btn btn-primary" value="Buscar" />
+        <br /><input type="submit" class="btn btn-primary" value="Buscar" />
         <br />
         <hr />
     </center>
@@ -84,8 +84,3 @@
 <div id="resultado">
 
 </div>
-
-
-
-
-

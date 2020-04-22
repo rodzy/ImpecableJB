@@ -1,75 +1,81 @@
 ﻿@model IEnumerable<ImpecableJB.Models.Usuario>
 
 @{
-    ViewBag.Title = "ListaUsuarios";
+    ViewBag.Title = "Lista de usuarios";
 }
 
-<h2>ListaUsuarios</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="row" style="height:100px">
+    <img src="~/Content/LogoImpecable2.png" style="width:100px;height:100px;position:center" />
+    <div class="col-lg-9">
+        <h2>Lista de usuarios</h2>
+        <p>Lista de todos los usuarios registrados en el sistema, puedes editar y cambiar el estado de acceso a la aplicación</p>
+    </div>
+</div>
+<hr />
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nivel.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rol.descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.apellido1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.apellido2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.correoElectronico)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.contrasena)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.estado)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nivel.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rol.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apellido1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.apellido2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.correoElectronico)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.contrasena)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idUsuario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idUsuario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idUsuario })
-        </td>
-    </tr>
-}
-
+    <thead style="background-color:cornflowerblue; color:white;border:groove;border-color:cornflowerblue">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nivel.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rol.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.correoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="border:groove;border-color:#e6e6e6">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <center>
+                        <img src="@Url.Content("~/Content/Rangos/"+item.Nivel.nombre+".png")" style="width:30px" /><br />
+                        @Html.DisplayFor(modelItem => item.Nivel.nombre)
+                    </center>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rol.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre) @Html.DisplayFor(modelItem => item.apellido1) @Html.DisplayFor(modelItem => item.apellido2)
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.correoElectronico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    <a class="btn btn-success" href="@Url.Action("EditarDatosCliente","Usuario",new { id=item.idUsuario})">
+                        <span class="material-icons">
+                            edit
+                        </span>
+                    </a>
+                    <a class="btn btn-danger" href="@Url.Action("EliminarUsuario","Usuario",new { id=item.idUsuario})">
+                        <span class="material-icons">
+                            delete
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
 </table>

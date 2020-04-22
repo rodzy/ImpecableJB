@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ImpecableJB.Models.Cupones_Usuario>
+
+<center>
+    <table class="table">
+        <thead style="background-color:cornflowerblue; color:white;border:groove;border-color:cornflowerblue">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cupones.titulo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.estado)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="border:groove;border-color:#e6e6e6">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cupones.titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuario.correoElectronico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estado)
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
+</center>

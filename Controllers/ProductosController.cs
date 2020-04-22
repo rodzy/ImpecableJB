@@ -67,6 +67,7 @@ namespace ImpecableJB.Controllers
                 db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 Session.Remove("Compra");
+                Session["ImagenRango"] = "~/Content/Rangos/" + usuario.Nivel.nombre + ".png";
             }
             return View(db.Producto.ToList());
         }
