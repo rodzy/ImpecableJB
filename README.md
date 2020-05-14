@@ -69,3 +69,6 @@ Coupons represent discounts or royalties, the higher the level, the higher the c
    - The administrator is responsible for registering coupon redemption.
    - Once the exchange is registered, the coupon does not appear as available to the client.
    - The client can see a detail of the exchange record.
+   
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
